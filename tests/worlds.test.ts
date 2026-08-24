@@ -36,6 +36,9 @@ describe("worlds registry", () => {
     WORLDS.forEach((w) => {
       expect(w.accent).toBeTruthy();
       expect(w.tagline.length).toBeGreaterThan(3);
+      expect(w.thesis.length).toBeGreaterThan(12);
+      expect(w.flow).toHaveLength(4);
+      expect(new Set(w.flow).size).toBe(w.flow.length);
     });
   });
 });

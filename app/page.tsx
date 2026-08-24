@@ -5,7 +5,7 @@ import { TOKEN_SWATCHES } from "@/content/cuda/scenes";
 import { JOURNEY } from "@/content/cuda/journey";
 import InstrumentDemo from "@/components/home/InstrumentDemo";
 import TokenLab from "@/components/home/TokenLab";
-import { WORLDS } from "@/content/worlds";
+import WorldObservatory from "@/components/home/WorldObservatory";
 
 export default function Home() {
   return (
@@ -19,13 +19,13 @@ export default function Home() {
               <p className="kicker"><b>AI ENGINEERING</b>&nbsp;&nbsp;VISUAL ENCYCLOPEDIA</p>
               <h1 className="heroTitle">See the machine <em>think.</em></h1>
               <p className="lede">
-                CUDA, but you can see it run. An interactive atlas where code, hardware,
-                execution, memory and performance become one continuous visual story.
+                Enter the living systems behind modern AI. Follow work, memory, tokens and
+                decisions through one continuous visual universe.
               </p>
               <div className="ctaRow">
-                <Link className="btn btnPrimary" href="/scenes/the-problem/">START THE JOURNEY <span aria-hidden="true">↓</span></Link>
-                <Link className="btn btnSecondary" href="/launch/">ENTER THE MACHINE</Link>
-                <Link className="btn btnGhost" href="/descent/">DESCEND →</Link>
+                <Link className="btn btnPrimary" href="#worlds">CHOOSE A WORLD <span aria-hidden="true">↓</span></Link>
+                <Link className="btn btnSecondary" href="/cuda/">ENTER CUDA</Link>
+                <Link className="btn btnGhost" href="/inference/">FOLLOW A TOKEN →</Link>
               </div>
               <div className="chipRow" aria-label="What is inside">
                 <span className="chip"><i style={{ background: "var(--teal)" }} />LIVE KERNEL LAUNCH</span>
@@ -34,7 +34,7 @@ export default function Home() {
                 <span className="chip"><i style={{ background: "var(--cyan)" }} />SPATIAL NAVIGATION</span>
               </div>
             </div>
-            <div className="vizWrap mini">
+            <div className="vizWrap mini heroInstrument">
               <MiniViz />
               <span className="hintline" style={{ display: "block", textAlign: "center", marginTop: 10 }}>
                 LIVE · MINIATURE LAUNCH LOOP
@@ -44,37 +44,16 @@ export default function Home() {
         </div>
       </section>
 
-            <section className="section" id="worlds" style={{ borderTop: 0 }}>
+      <section className="section worldsSection" id="worlds" style={{ borderTop: 0 }}>
         <div className="wrap">
           <div className="sec-head" style={{ marginBottom: "var(--s4)" }}>
             <div>
               <p className="kicker"><b>WORLDS</b> · EIGHT DISCIPLINES · TWO LIVE TODAY</p>
-              <h2 className="sec-title">Choose your discipline.</h2>
+              <h2 className="sec-title">A universe of working systems.</h2>
+              <p className="sec-sub">Each signal is a physical journey. Touch one and its machine wakes up.</p>
             </div>
           </div>
-          <div className="galleryGrid">
-            {WORLDS.map((w) => {
-              const live = w.status === "live";
-              const inner = (<>
-                <h4 style={{ color: live ? undefined : "var(--ink3)" }}>
-                  {live ? <>WORLD · {w.scenes} SCENES · {w.entries} ENTRIES</> : <>PLANNED WORLD</>}
-                </h4>
-                <h3>{w.name}</h3>
-                <p><i style={{ fontStyle: "normal", color: w.accent }}>{w.tagline}</i> — {w.blurb}</p>
-                <span className="link-arrow">{live ? "ENTER →" : "COMING IN A FUTURE MVP"}</span>
-              </>);
-              return live ? (
-                <Link key={w.id} href={w.href!} className="card concept"
-                  style={{ textDecoration: "none", color: "inherit", borderLeft: `3px solid ${w.accent}` }}>
-                  {inner}
-                </Link>
-              ) : (
-                <div key={w.id} className="card concept" style={{ borderLeft: `3px solid ${w.accent}`, opacity: 0.55 }}>
-                  {inner}
-                </div>
-              );
-            })}
-          </div>
+          <WorldObservatory />
         </div>
       </section>
 

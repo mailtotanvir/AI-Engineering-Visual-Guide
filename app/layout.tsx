@@ -5,10 +5,10 @@ import TopBar from "@/components/shell/TopBar";
 
 export const metadata: Metadata = {
   title: "AI Engineering Visual Encyclopedia",
-  description: "CUDA, but you can see it run. An interactive atlas where code, hardware, execution and memory become one visual story.",
+  description: "See the machine think. Explore the living systems behind CUDA, inference, and AI engineering.",
   openGraph: {
     title: "AI Engineering Visual Encyclopedia",
-    description: "See the GPU think — an interactive atlas of how a CUDA kernel really runs.",
+    description: "See the machine think — an interactive visual atlas of AI engineering.",
     type: "website",
   },
 };
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span>
                 AI ENGINEERING VISUAL ENCYCLOPEDIA · worlds: CUDA · INFERENCE · more coming
               </span>
-              <span className="kicker">CUDA, BUT YOU CAN SEE IT RUN</span>
+              <span className="kicker">SEE THE MACHINE THINK</span>
             </div>
           </footer>
         </MotionProvider>

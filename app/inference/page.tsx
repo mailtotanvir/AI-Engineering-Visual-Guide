@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { INF_JOURNEY } from "@/content/inference/journey";
+import WorldHeroSignal from "@/components/world/WorldHeroSignal";
 
 export const metadata = { title: "Inference Engineering — Visual Encyclopedia" };
 
@@ -9,16 +10,22 @@ export default function InferenceHome() {
       <section className="hero heroSec" aria-label="Inference engineering landing">
         <div className="heroGridBg" aria-hidden="true" />
         <div className="wrap">
-          <p className="kicker"><b>INFERENCE ENGINEERING</b>&nbsp;&nbsp;VISUAL ENCYCLOPEDIA</p>
-          <h1 className="heroTitle">Watch every token <em>earn</em> its place.</h1>
-          <p className="lede">
-            LLM serving is a physics problem wearing a chat interface. Prefill versus decode,
-            the KV economy, batching, sampling, speculation — see each one move.
-          </p>
-          <div className="ctaRow">
-            <Link className="btn btnPrimary" href="/inference/scenes/decode-loop/">START THE JOURNEY <span aria-hidden="true">↓</span></Link>
-            <Link className="btn btnSecondary" href="/inference/atlas/">OPEN THE ATLAS</Link>
-            <Link className="btn btnGhost" href="/">CUDA WORLD →</Link>
+          <div className="worldHeroLayout">
+            <div>
+              <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">WORLDS</Link> <i>/</i> <b>INFERENCE</b></nav>
+              <p className="kicker" style={{ marginTop: "var(--s3)" }}><b>WORLD 02</b>&nbsp;&nbsp;INFERENCE ENGINEERING</p>
+              <h1 className="heroTitle">Watch every token <em>earn</em> its place.</h1>
+              <p className="lede">
+                LLM serving is a physics problem wearing a chat interface. Prefill versus decode,
+                the KV economy, batching, sampling, speculation — see each one move.
+              </p>
+              <div className="ctaRow">
+                <Link className="btn btnPrimary" href="/inference/scenes/decode-loop/">START THE JOURNEY <span aria-hidden="true">↓</span></Link>
+                <Link className="btn btnSecondary" href="/inference/atlas/">OPEN THE ATLAS</Link>
+                <Link className="btn btnGhost" href="/">ALL WORLDS →</Link>
+              </div>
+            </div>
+            <WorldHeroSignal worldId="inference" />
           </div>
         </div>
       </section>

@@ -313,3 +313,62 @@ a.dot.on{background:var(--teal);border-color:var(--teal)}
 .wtName{font-family:var(--font-m);font-size:11.5px;font-weight:600;letter-spacing:.06em;color:var(--ink)}
 .worldTile.live .wtName{color:var(--w-accent)}
 .wtTag{font-family:var(--font-m);font-size:9px;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase}
+
+/* The observatory is a map of systems, not a menu of cards. */
+.worldsSection{position:relative;overflow:hidden;padding-top:var(--s8)}
+.worldsSection::before{content:"";position:absolute;inset:10% -20%;pointer-events:none;background:radial-gradient(ellipse at center,rgba(70,227,200,.055),transparent 58%)}
+.observatory{--active-world:var(--teal);position:relative;display:grid;grid-template-columns:minmax(420px,.92fr) minmax(480px,1.08fr);gap:clamp(24px,4vw,72px);align-items:center;min-height:660px;padding:var(--s6);border:1px solid var(--hair);border-radius:28px;background:linear-gradient(145deg,rgba(10,20,27,.72),rgba(4,7,10,.95) 58%),radial-gradient(circle at 25% 50%,color-mix(in srgb,var(--active-world) 9%,transparent),transparent 42%);box-shadow:inset 0 1px rgba(255,255,255,.025),0 40px 100px rgba(0,0,0,.28);transition:--active-world .6s ease}
+.observatory::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-image:linear-gradient(rgba(159,182,187,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(159,182,187,.025) 1px,transparent 1px);background-size:36px 36px;mask-image:radial-gradient(circle at 28% 50%,#000,transparent 62%)}
+.observatoryField{position:relative;min-height:580px;isolation:isolate}
+.observatoryCore{position:absolute;left:50%;top:44%;width:118px;height:118px;transform:translate(-50%,-50%);border:1px solid color-mix(in srgb,var(--active-world) 52%,transparent);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,color-mix(in srgb,var(--active-world) 15%,var(--bg1)),rgba(6,12,17,.92) 62%);box-shadow:0 0 70px color-mix(in srgb,var(--active-world) 13%,transparent),inset 0 0 30px rgba(255,255,255,.025);z-index:2;transition:border-color .5s,box-shadow .5s}
+.observatoryCore::before,.observatoryCore::after{content:"";position:absolute;border-radius:50%;border:1px solid color-mix(in srgb,var(--active-world) 24%,transparent);inset:-12px;animation:coreBreath 3.8s ease-in-out infinite}
+.observatoryCore::after{inset:-26px;opacity:.36;animation-delay:-1.9s}
+.observatoryCore span{font-size:30px;font-weight:700;letter-spacing:-.04em;color:var(--active-world)}
+.observatoryCore small{font-family:var(--font-m);font-size:8px;letter-spacing:.19em;color:var(--ink3)}
+@keyframes coreBreath{50%{transform:scale(1.04);opacity:.45}}
+.orbit{position:absolute;left:50%;top:44%;border:1px solid var(--hair2);border-radius:50%;transform:translate(-50%,-50%) rotate(-12deg);pointer-events:none}
+.orbitOne{width:330px;height:330px}.orbitTwo{width:470px;height:500px;border-style:dashed;opacity:.7}
+.worldNode{appearance:none;position:absolute;z-index:3;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:104px;padding:9px 10px;border:0;background:transparent;color:var(--ink3);font:inherit;text-align:center;cursor:pointer;text-decoration:none!important;transition:color .25s,transform .35s var(--ease-out),opacity .25s}
+.worldNode::after{content:"";position:absolute;left:50%;top:18px;width:clamp(32px,5vw,72px);height:1px;background:linear-gradient(90deg,var(--world-color),transparent);transform-origin:left;opacity:.16;z-index:-1}
+.worldNode:nth-of-type(even)::after{transform:rotate(180deg);transform-origin:left}
+.worldNode i{width:13px;height:13px;border:1px solid color-mix(in srgb,var(--world-color) 62%,transparent);border-radius:50%;background:color-mix(in srgb,var(--world-color) 12%,var(--bg0));box-shadow:0 0 0 5px color-mix(in srgb,var(--world-color) 4%,transparent);transition:background .25s,box-shadow .25s,transform .25s}
+.worldNode strong{font-family:var(--font-m);font-size:11px;letter-spacing:.09em;font-weight:600;color:inherit}
+.worldNode span{font-family:var(--font-m);font-size:7.5px;letter-spacing:.15em;opacity:.58}
+.worldNode.live{color:color-mix(in srgb,var(--world-color) 72%,var(--ink))}
+.worldNode.planned{opacity:.52}.worldNode:hover,.worldNode:focus-visible,.worldNode.active{color:var(--world-color);opacity:1;transform:translateY(-3px)}
+.worldNode.active i{background:var(--world-color);box-shadow:0 0 0 6px color-mix(in srgb,var(--world-color) 9%,transparent),0 0 26px color-mix(in srgb,var(--world-color) 60%,transparent);transform:scale(1.08)}
+.northWest{left:7%;top:11%}.northEast{right:6%;top:10%}.west{left:0;top:39%}.east{right:-1%;top:38%}.southWest{left:8%;top:67%}.southEast{right:5%;top:67%}.south{left:34%;top:80%}.farSouth{left:57%;top:83%}
+.worldReadout{position:relative;z-index:2;min-height:480px;border:1px solid color-mix(in srgb,var(--active-world) 27%,var(--hair));border-radius:22px;padding:var(--s5);background:rgba(4,8,12,.62);box-shadow:0 24px 70px rgba(0,0,0,.28),inset 0 0 80px color-mix(in srgb,var(--active-world) 3%,transparent);overflow:hidden}
+.worldReadout::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--active-world) 3%,transparent),transparent);transform:translateX(-100%);animation:readoutScan 7s ease-in-out infinite}
+@keyframes readoutScan{0%,65%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.readoutHead{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-m);font-size:9px;letter-spacing:.17em;color:var(--ink3)}
+.readoutStatus{display:flex;align-items:center;gap:8px}.readoutStatus i{width:6px;height:6px;border-radius:50%;background:var(--active-world);box-shadow:0 0 10px var(--active-world)}
+.worldGlyph{width:100%;display:block;margin:var(--s4) 0 0;overflow:visible}
+.worldGlyph text{font-family:var(--font-m);font-size:9px;letter-spacing:.12em;fill:var(--ink3)}
+.worldPath{fill:none}.worldPathGhost{stroke:var(--hair);stroke-width:1}.worldPathLive{stroke-width:1.5;stroke-dasharray:5 9;animation:pathCurrent 1.2s linear infinite}
+@keyframes pathCurrent{to{stroke-dashoffset:-28}}
+.worldHalo{fill:rgba(4,7,10,.9);stroke-width:1;opacity:.35;animation:stageSignal 2.8s ease-in-out infinite;animation-delay:calc(var(--stage) * .28s)}
+.worldStage{animation:worldStageIn .55s var(--ease-out) both;animation-delay:calc(var(--stage) * .07s)}
+@keyframes worldStageIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes stageSignal{45%{r:31;opacity:.08}}
+.readoutCopy{display:grid;grid-template-columns:1.15fr .9fr;gap:var(--s4);align-items:end;padding-top:var(--s4);border-top:1px solid var(--hair2)}
+.readoutCopy .kicker{color:var(--active-world);margin:0 0 7px}.readoutCopy h3{font-size:clamp(24px,3vw,36px);line-height:1.05;letter-spacing:-.025em;margin:0}.readoutCopy>p{font-size:14px;color:var(--ink2);margin:0}
+.observatoryEnter,.observatoryPlanned{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--hair2);padding-top:var(--s4);font-family:var(--font-m);font-size:11px;letter-spacing:.16em;color:var(--active-world);text-decoration:none!important}
+.observatoryEnter:hover span{transform:translate(3px,-3px)}.observatoryEnter span{transition:transform .2s}
+.observatoryPlanned{color:var(--ink3)}
+.observatoryHint{position:absolute;left:var(--s6);bottom:var(--s4);margin:0;font-family:var(--font-m);font-size:8px;letter-spacing:.18em;color:var(--ink3)}
+.heroInstrument::before{content:"LIVE SYSTEM";position:absolute;right:4%;top:2%;font-family:var(--font-m);font-size:8px;letter-spacing:.18em;color:var(--teal);z-index:2}
+.worldHeroLayout{position:relative;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(370px,.88fr);gap:clamp(30px,5vw,80px);align-items:center}
+.worldHeroSignal{border:1px solid color-mix(in srgb,var(--world-color) 30%,var(--hair));border-radius:20px;padding:var(--s4);background:linear-gradient(160deg,color-mix(in srgb,var(--world-color) 5%,var(--bg1)),rgba(4,7,10,.78));box-shadow:inset 0 0 60px color-mix(in srgb,var(--world-color) 3%,transparent),0 24px 60px rgba(0,0,0,.2)}
+.worldHeroSignalHead{display:flex;justify-content:space-between;font-family:var(--font-m);font-size:8px;letter-spacing:.16em;color:var(--ink3)}
+.worldHeroSignalHead span{display:flex;align-items:center;gap:7px;color:var(--world-color)}.worldHeroSignalHead i{width:6px;height:6px;border-radius:50%;background:var(--world-color);box-shadow:0 0 9px var(--world-color)}.worldHeroSignalHead b{font-weight:500}
+.worldHeroSignal .worldGlyph{margin:-6px 0 -12px}.worldHeroSignal>p{margin:0;padding:var(--s3) var(--s2) var(--s1);border-top:1px solid var(--hair2);font-size:13px;color:var(--ink2)}
+
+@media(max-width:980px){
+  .observatory{grid-template-columns:1fr;min-height:0}.observatoryField{min-height:480px}.worldReadout{min-height:420px}.observatoryHint{display:none}.worldHeroLayout{grid-template-columns:1fr}.worldHeroSignal{max-width:650px}
+}
+@media(max-width:620px){
+  .observatory{padding:var(--s4);border-radius:20px}.observatoryField{min-height:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding-top:118px}.observatoryCore{top:58px}.orbit{display:none}
+  .worldNode{position:relative!important;inset:auto!important;min-width:0;align-items:flex-start;text-align:left;border:1px solid var(--hair2);border-radius:10px;padding:10px 12px}.worldNode::after{display:none}.worldNode span{font-size:7px}
+  .worldReadout{min-height:0;padding:var(--s4)}.readoutCopy{grid-template-columns:1fr}.worldGlyph{margin:0}.readoutCopy>p{font-size:13px}
+}

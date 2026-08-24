@@ -9,6 +9,10 @@ export interface World {
   href?: string;
   scenes?: number;
   entries?: number;
+  /** The physical story this world tells in the observatory. */
+  flow: readonly string[];
+  /** One concise editorial idea shown when the world is in focus. */
+  thesis: string;
 }
 
 export const WORLDS: World[] = [
@@ -23,6 +27,8 @@ export const WORLDS: World[] = [
     href: "/cuda/",
     scenes: 10,
     entries: 24,
+    flow: ["THREADS", "BLOCKS", "SMs", "MEMORY"],
+    thesis: "A million tiny workers become one visible machine.",
   },
   {
     id: "inference",
@@ -35,6 +41,8 @@ export const WORLDS: World[] = [
     href: "/inference/",
     scenes: 8,
     entries: 17,
+    flow: ["PROMPT", "PREFILL", "KV", "DECODE"],
+    thesis: "Follow one request as memory turns into language.",
   },
   {
     id: "training-scale",
@@ -44,6 +52,8 @@ export const WORLDS: World[] = [
     blurb: "Data pipelines, scaling laws, token budgets — and tensor, pipeline, data & expert parallelism.",
     accent: "var(--gold)",
     status: "planned",
+    flow: ["DATA", "BATCHES", "GRADIENTS", "WEIGHTS"],
+    thesis: "Watch information become a change in the model.",
   },
   {
     id: "post-training",
@@ -53,6 +63,8 @@ export const WORLDS: World[] = [
     blurb: "From base weights to assistant: instruction tuning, preference optimization, logit matching, data synthesis.",
     accent: "var(--cyan)",
     status: "planned",
+    flow: ["TRACES", "PREFERENCES", "SIGNAL", "BEHAVIOR"],
+    thesis: "See raw capability shaped into useful behavior.",
   },
   {
     id: "evals",
@@ -62,6 +74,8 @@ export const WORLDS: World[] = [
     blurb: "Benchmark design, contamination, LLM-as-judge, regression gates, capability tracking.",
     accent: "var(--rose)",
     status: "planned",
+    flow: ["INPUT", "MODEL", "JUDGE", "REGRESSION"],
+    thesis: "Turn model behavior into evidence you can trust.",
   },
   {
     id: "ai-runtime",
@@ -71,6 +85,8 @@ export const WORLDS: World[] = [
     blurb: "Agentic loops, harness engineering, retrieval pipelines, tool use, memory systems.",
     accent: "#7FE3FF",
     status: "planned",
+    flow: ["REQUEST", "PLAN", "TOOL", "STATE"],
+    thesis: "Step inside the loop between intention and action.",
   },
   {
     id: "infrastructure",
@@ -80,6 +96,8 @@ export const WORLDS: World[] = [
     blurb: "Interconnects, schedulers, failure domains, capacity planning, cost per million tokens.",
     accent: "#FF9E7A",
     status: "planned",
+    flow: ["TRAFFIC", "SCHEDULER", "GPUs", "STORAGE"],
+    thesis: "Trace demand through the systems that keep it alive.",
   },
   {
     id: "safety-alignment",
@@ -89,6 +107,8 @@ export const WORLDS: World[] = [
     blurb: "Refusals, red-teaming, jailbreak surfaces, monitoring for drift and misuse.",
     accent: "var(--lime)",
     status: "planned",
+    flow: ["PROMPT", "POLICY", "DECISION", "MONITOR"],
+    thesis: "Inspect the boundaries that make capability dependable.",
   },
 ];
 

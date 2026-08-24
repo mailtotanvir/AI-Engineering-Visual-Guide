@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const NS = "http://www.w3.org/2000/svg";
-const BOOT_MS = 8000;
+const BOOT_MS = 6200;
 
 type TagMap = {
   path: SVGPathElement; circle: SVGCircleElement; rect: SVGRectElement;
@@ -100,7 +100,7 @@ export default function BootVeil() {
     const cells: SVGRectElement[] = [];
     for (let c = 0; c < 24; c++) cells.push(el("rect", { x: 330 + c * 30, y: 560, width: 28, height: 30, rx: 3, class: "memCell", "fill-opacity": 0.06, "stroke-opacity": 0.18 }, memWrap));
     const title = el("text", { x: 48, y: 602, class: "lblStrong", "font-size": 13, opacity: 0, "letter-spacing": "0.42em" }, svg);
-    txt(title, "CUDA VISUAL ENCYCLOPEDIA");
+    txt(title, "AI ENGINEERING · VISUAL ENCYCLOPEDIA");
 
     const finish = () => {
       if (booted) return;
