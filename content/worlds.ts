@@ -1,0 +1,97 @@
+export interface World {
+  id: string;
+  name: string;
+  shortName: string;
+  tagline: string;
+  blurb: string;
+  accent: string;
+  status: "live" | "planned";
+  href?: string;
+  scenes?: number;
+  entries?: number;
+}
+
+export const WORLDS: World[] = [
+  {
+    id: "cuda",
+    name: "CUDA Engineering",
+    shortName: "CUDA",
+    tagline: "How a kernel runs",
+    blurb: "Launch, threads, warps, memory geography, tooling — the machine under the code.",
+    accent: "var(--teal)",
+    status: "live",
+    href: "/cuda/",
+    scenes: 10,
+    entries: 24,
+  },
+  {
+    id: "inference",
+    name: "Inference Engineering",
+    shortName: "Inference",
+    tagline: "How tokens are served",
+    blurb: "Prefill vs decode, the KV economy, batching, sampling, speculation.",
+    accent: "var(--iris)",
+    status: "live",
+    href: "/inference/",
+    scenes: 8,
+    entries: 17,
+  },
+  {
+    id: "training-scale",
+    name: "Training at Scale",
+    shortName: "Training",
+    tagline: "Pre-training · distributed compute",
+    blurb: "Data pipelines, scaling laws, token budgets — and tensor, pipeline, data & expert parallelism.",
+    accent: "var(--gold)",
+    status: "planned",
+  },
+  {
+    id: "post-training",
+    name: "Post-Training & Distillation",
+    shortName: "Post-Training",
+    tagline: "SFT · RLHF · DPO · distillation",
+    blurb: "From base weights to assistant: instruction tuning, preference optimization, logit matching, data synthesis.",
+    accent: "var(--cyan)",
+    status: "planned",
+  },
+  {
+    id: "evals",
+    name: "Evaluation",
+    shortName: "Evals",
+    tagline: "Measuring what matters",
+    blurb: "Benchmark design, contamination, LLM-as-judge, regression gates, capability tracking.",
+    accent: "var(--rose)",
+    status: "planned",
+  },
+  {
+    id: "ai-runtime",
+    name: "AI Runtime",
+    shortName: "AI Runtime",
+    tagline: "Agents · harnesses · RAG",
+    blurb: "Agentic loops, harness engineering, retrieval pipelines, tool use, memory systems.",
+    accent: "#7FE3FF",
+    status: "planned",
+  },
+  {
+    id: "infrastructure",
+    name: "Infrastructure",
+    shortName: "Infra",
+    tagline: "Clusters · cost · reliability",
+    blurb: "Interconnects, schedulers, failure domains, capacity planning, cost per million tokens.",
+    accent: "#FF9E7A",
+    status: "planned",
+  },
+  {
+    id: "safety-alignment",
+    name: "Safety & Alignment",
+    shortName: "Safety",
+    tagline: "Guardrails by construction",
+    blurb: "Refusals, red-teaming, jailbreak surfaces, monitoring for drift and misuse.",
+    accent: "var(--lime)",
+    status: "planned",
+  },
+];
+
+export function worldById(id: string): World | undefined {
+  return WORLDS.find((w) => w.id === id);
+}

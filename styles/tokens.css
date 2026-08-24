@@ -1,0 +1,14 @@
+:root{
+  --bg0:#04070A;--bg1:#060C11;--bg2:#0A141B;--bg3:#10202B;
+  --ink:#E9F4F1;--ink2:#9FB6BB;--ink3:#5E767C;
+  --hair:rgba(159,182,187,.14);--hair2:rgba(159,182,187,.07);
+  --teal:#46E3C8;--cyan:#5CC8FF;--iris:#A48FFF;--gold:#FFC46B;--rose:#FF7FA5;--lime:#7BE495;
+  --teal-dim:rgba(70,227,200,.14);--cyan-dim:rgba(92,200,255,.13);--iris-dim:rgba(164,143,255,.14);
+  --gold-dim:rgba(255,196,107,.13);--rose-dim:rgba(255,127,165,.13);
+  --font-d:"Space Grotesk",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-m:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+  --r-s:8px;--r-m:12px;--r-l:18px;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;
+  --dur-fast:.16s;--dur-med:.45s;--dur-slow:.8s;
+  --ease-out:cubic-bezier(.22,1,.36,1);
+}
