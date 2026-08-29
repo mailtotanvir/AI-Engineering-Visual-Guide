@@ -5,11 +5,11 @@ describe("worlds registry", () => {
   it("keeps the bar at eight disciplines", () => {
     expect(WORLDS).toHaveLength(8);
   });
-  it("has unique ids and exactly two live worlds", () => {
+  it("has unique ids and exactly three live worlds", () => {
     const ids = WORLDS.map((w) => w.id);
     expect(new Set(ids).size).toBe(ids.length);
     const live = WORLDS.filter((w) => w.status === "live");
-    expect(live.map((w) => w.id)).toEqual(["cuda", "inference"]);
+    expect(live.map((w) => w.id)).toEqual(["cuda", "inference", "training-scale"]);
     live.forEach((w) => expect(w.href).toMatch(/^\//));
   });
   it("planned worlds expose no dead links", () => {
