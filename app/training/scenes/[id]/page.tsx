@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import TrainShell from "@/components/training/TrainShell";
 import {
-  Checkpointing, DataParallel, LossCurveScene, MemoryBudget, MoERouting,
-  OneStep, PipelineParallel, RingAllReduce, ScalingLaws, TensorParallel,
-  TokenDiet,
+  BpeScene, CausalMask, Checkpointing, ClmVsMlm, ContextWindow, CrawlFilter,
+  DataParallel, DedupScene, GqaScene, MemoryBudget, NormActivation, OneStep,
+  OptimizerSchedule, PipelineParallel, PrecisionScene, RingAllReduce, RopeScene,
+  ScalingLaws, TelemetryScene, TensorParallel, TokenDiet,
 } from "@/components/training/scenes";
 import { TRAIN_JOURNEY } from "@/content/training/journey";
 
@@ -13,16 +14,26 @@ export function generateStaticParams() {
 
 const SCENES: Record<string, React.ReactNode> = {
   "token-diet": <TokenDiet />,
+  "clm-vs-mlm": <ClmVsMlm />,
   "one-step": <OneStep />,
-  "loss-curve": <LossCurveScene />,
+  "causal-mask": <CausalMask />,
+  "context-window": <ContextWindow />,
+  "crawl-filter": <CrawlFilter />,
+  "dedup": <DedupScene />,
+  "bpe": <BpeScene />,
+  "scaling-laws": <ScalingLaws />,
+  "rope": <RopeScene />,
+  "norm-activation": <NormActivation />,
+  "gqa": <GqaScene />,
   "memory-budget": <MemoryBudget />,
   "data-parallel": <DataParallel />,
   "ring-allreduce": <RingAllReduce />,
   "tensor-parallel": <TensorParallel />,
   "pipeline-parallel": <PipelineParallel />,
+  "precision": <PrecisionScene />,
   "checkpointing": <Checkpointing />,
-  "moe-routing": <MoERouting />,
-  "scaling-laws": <ScalingLaws />,
+  "optimizer-schedule": <OptimizerSchedule />,
+  "telemetry": <TelemetryScene />,
 };
 
 export default function Page({ params }: { params: { id: string } }) {

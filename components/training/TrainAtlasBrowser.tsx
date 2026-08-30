@@ -4,17 +4,16 @@ import React, { useState } from "react";
 import { TRAIN_DOMAINS, TRAIN_TOPICS } from "@/content/training/atlas";
 
 const DOMAIN_COLORS: Record<string, string> = {
-  foundations: "var(--teal)",
-  memory: "var(--gold)",
-  "data-parallel": "var(--cyan)",
-  "model-parallel": "var(--rose)",
-  efficiency: "var(--iris)",
-  moe: "var(--lime)",
-  budgeting: "#FF9E7A",
+  objectives: "var(--teal)",
+  data: "var(--gold)",
+  recipe: "var(--cyan)",
+  infrastructure: "var(--rose)",
+  numerics: "var(--iris)",
+  diagnostics: "var(--lime)",
 };
 
 export default function TrainAtlasBrowser() {
-  const [domain, setDomain] = useState("foundations");
+  const [domain, setDomain] = useState("objectives");
   const [openId, setOpenId] = useState<string | null>(null);
   const topics = TRAIN_TOPICS.filter((t) => t.domain === domain);
 
@@ -38,7 +37,7 @@ export default function TrainAtlasBrowser() {
       <div className="atlasList">
         {topics.map((t) => {
           const open = openId === t.id;
-          const color = DOMAIN_COLORS[t.domain];
+          const color = DOMAIN_COLORS[t.domain] || "var(--teal)";
           return (
             <article key={t.id} className={"topicCard" + (open ? " open" : "")} style={{ borderLeftColor: color }}>
               <header role="button" tabIndex={0} aria-expanded={open}
