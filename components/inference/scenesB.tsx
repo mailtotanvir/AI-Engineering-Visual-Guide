@@ -38,8 +38,7 @@ export function SiliconMap() {
     <div className="panel" style={{ padding: "var(--s5)" }}>
       <div className="controls" style={{ marginBottom: "var(--s4)", flexWrap: "wrap" }}>
         {SILICON_SPECS.map((s) => (
-          <button key={s.id} className={"chip" + (sel === s.id ? "" : "")}
-            style={sel === s.id ? { color: "var(--iris)", borderColor: "var(--iris)" } : undefined}
+          <button key={s.id} className={"btn btnSm " + (sel === s.id ? "btnPrimary" : "btnSecondary")}
             onClick={() => setSel(s.id)}>{s.name}</button>
         ))}
       </div>
@@ -68,41 +67,113 @@ export function MemoryWall() {
   const store = storeOf("memwall", 8000);
   useTick(store);
   const t = store.t;
-  // sweep operational intensity from prefill-like (100) to decode-like (1)
-  const intensity = 100 * Math.pow(0.01, t);
+  // intensity sweeps from 1000 FLOP/byte (prefill on right) down to 0.1 FLOP/byte (decode on left)
+  const intensity = Math.pow(10, 3 - 4 * t);
   const gpu = rooflineTflops(989, 3.35, intensity);
   const lpu = rooflineTflops(750, 80, intensity);
-  const yOf = (tf: number) => 200 - (tf / 1000) * 170;
-  const cx = 60 + t * 800;
-  const anchor = t > 0.75 ? "end" : "start";
-  const lx = t > 0.75 ? cx - 12 : cx + 12;
+  const yOf = (tf: number) => 210 - (tf / 1000) * 180;
+  const xOf = (iVal: number) => {
+    const logI = Math.log10(Math.max(0.1, Math.min(1000, iVal)));
+    return 60 + ((logI - (-1)) / 4.0) * 800;
+  };
+
+  // generate roofline curve polylines
+  const gpuPoly = Array.from({ length: 101 }, (_, k) => {
+    const iVal = Math.pow(10, -1 + (k / 100) * 4);
+    const tf = Math.min(989, 3.35 * iVal);
+    return `${xOf(iVal).toFixed(1)},${yOf(tf).toFixed(1)}`;
+  }).join(" ");
+
+  const lpuPoly = Array.from({ length: 101 }, (_, k) => {
+    const iVal = Math.pow(10, -1 + (k / 100) * 4);
+    const tf = Math.min(750, 80 * iVal);
+    return `${xOf(iVal).toFixed(1)},${yOf(tf).toFixed(1)}`;
+  }).join(" ");
+
+  const cx = xOf(intensity);
+  const cyGpu = yOf(gpu);
+  const cyLpu = yOf(lpu);
+  const anchor = cx > 700 ? "end" : "start";
+  const lx = cx > 700 ? cx - 14 : cx + 14;
+
   return (
     <div className="panel" style={{ padding: "var(--s5)" }}>
       <div className="controls" style={{ marginBottom: "var(--s4)" }}>
         <RunReset store={store} />
         <button className="btn btnSecondary btnSm" onClick={() => store.reset()}>⟳ RESET</button>
-        <span className="configChip">ARITHMETIC INTENSITY · {intensity.toFixed(1)} FLOP/B</span>
+        <span className="configChip">ARITHMETIC INTENSITY · {intensity >= 10 ? intensity.toFixed(0) : intensity.toFixed(1)} FLOP/B</span>
+        <span className="chip" style={{ color: intensity < 10 ? "var(--rose)" : "var(--teal)", borderColor: "currentColor" }}>
+          {intensity > 100 ? "PREFILL REGIME (COMPUTE-BOUND)" : intensity > 10 ? "TRANSITION (SLIDING DOWN THE WALL)" : "DECODE REGIME (MEMORY-BOUND)"}
+        </span>
       </div>
-      <svg viewBox="0 0 900 240" role="img" aria-label="Roofline sweep from compute-bound to memory-bound"
+      <svg viewBox="0 0 900 250" role="img" aria-label="Roofline curves sweeping from compute-bound to memory-bound"
         style={{ width: "100%", height: "auto", display: "block" }}>
-        <line x1={60} y1={200} x2={880} y2={200} stroke="var(--ink3)" />
-        <line x1={60} y1={20} x2={60} y2={200} stroke="var(--ink3)" />
-        <text x={470} y={226} textAnchor="middle" className="lblMono">ARITHMETIC INTENSITY (FLOP per byte) →</text>
-        <text x={20} y={110} className="lblMono" transform="rotate(-90 20 110)" textAnchor="middle">TFLOPS</text>
-        <polyline points={`${60},${yOf(Math.min(989, 3.35 * 100))} 860,${yOf(3.35 * 100)}`}
-          fill="none" stroke="var(--rose)" strokeWidth={2} strokeDasharray="6 5" />
-        <circle cx={cx} cy={yOf(gpu)} r={7} style={{ fill: "var(--teal)" }} />
-        <circle cx={cx} cy={yOf(lpu)} r={7} style={{ fill: "var(--gold)" }} />
-        <text x={lx} y={yOf(gpu) - 12} textAnchor={anchor} className="lblMono" style={{ fill: "var(--teal)" }}>GPU {gpu.toFixed(0)} TF</text>
-        <text x={lx} y={yOf(lpu) + 22} textAnchor={anchor} className="lblMono" style={{ fill: "var(--gold)" }}>LPU {lpu.toFixed(0)} TF</text>
-        <text x={90} y={44} className="lblMono" style={{ fill: "var(--rose)" }}>memory-bound roof (bandwidth × intensity)</text>
+        {/* Axes */}
+        <line x1={60} y1={210} x2={860} y2={210} stroke="var(--ink3)" />
+        <line x1={60} y1={20} x2={60} y2={210} stroke="var(--ink3)" />
+        <text x={460} y={242} textAnchor="middle" className="lblMono">ARITHMETIC INTENSITY (FLOP per byte, log scale) →</text>
+        <text x={20} y={115} className="lblMono" transform="rotate(-90 20 115)" textAnchor="middle">TFLOPS</text>
+
+        {/* Intensity Ticks */}
+        {[0.1, 1, 10, 100, 1000].map((v) => {
+          const x = xOf(v);
+          return (
+            <g key={v}>
+              <line x1={x} y1={210} x2={x} y2={215} stroke="var(--ink3)" />
+              <text x={x} y={228} textAnchor="middle" className="lblMono" style={{ fontSize: 10 }}>{v}</text>
+            </g>
+          );
+        })}
+
+        {/* Roofline Curves */}
+        <polyline points={gpuPoly} fill="none" stroke="var(--teal)" strokeWidth={2.5} opacity={0.85} />
+        <polyline points={lpuPoly} fill="none" stroke="var(--gold)" strokeWidth={2.5} opacity={0.85} />
+
+        {/* Ceilings Labels */}
+        <text x={850} y={yOf(989) - 6} textAnchor="end" className="lblMono" style={{ fill: "var(--teal)", fontSize: 10.5 }}>
+          GPU Peak (989 TF)
+        </text>
+        <text x={850} y={yOf(750) - 6} textAnchor="end" className="lblMono" style={{ fill: "var(--gold)", fontSize: 10.5 }}>
+          LPU Peak (750 TF)
+        </text>
+
+        {/* Knee Annotations */}
+        <text x={xOf(295.2)} y={yOf(989) + 16} textAnchor="middle" className="lblMono" style={{ fill: "var(--teal)", fontSize: 9.5 }}>
+          Knee 295 FLOP/B
+        </text>
+        <text x={xOf(9.375)} y={yOf(750) + 16} textAnchor="middle" className="lblMono" style={{ fill: "var(--gold)", fontSize: 9.5 }}>
+          Knee 9.4 FLOP/B
+        </text>
+
+        {/* Sweep Position Marker Line */}
+        <line x1={cx} y1={20} x2={cx} y2={210} stroke="var(--ink3)" strokeDasharray="4 4" opacity={0.5} />
+
+        {/* Dynamic Position Dots */}
+        <circle cx={cx} cy={cyGpu} r={7} style={{ fill: "var(--teal)" }} />
+        <circle cx={cx} cy={cyLpu} r={7} style={{ fill: "var(--gold)" }} />
+
+        {/* Dynamic Labels */}
+        <text x={lx} y={cyGpu - 10} textAnchor={anchor} className="lblMono" style={{ fill: "var(--teal)", fontWeight: "bold" }}>
+          GPU {gpu >= 10 ? gpu.toFixed(0) : gpu.toFixed(1)} TF
+        </text>
+        <text x={lx} y={cyLpu + 20} textAnchor={anchor} className="lblMono" style={{ fill: "var(--gold)", fontWeight: "bold" }}>
+          LPU {lpu >= 10 ? lpu.toFixed(0) : lpu.toFixed(1)} TF
+        </text>
+
+        {/* Slanted Wall Labels */}
+        <text x={xOf(0.5)} y={yOf(3.35 * 0.5) - 10} className="lblMono" style={{ fill: "var(--teal)", fontSize: 10 }}>
+          3.35 TB/s HBM
+        </text>
+        <text x={xOf(0.5)} y={yOf(80 * 0.5) - 10} className="lblMono" style={{ fill: "var(--gold)", fontSize: 10 }}>
+          80 TB/s SRAM
+        </text>
       </svg>
       <p className="raceCaption" aria-live="polite">
-        {t < 0.25
-          ? "Prefill territory: high intensity, compute roof dominates — the GPU's 989 TF ceiling is in play."
-          : t < 0.8
-            ? "Sliding toward decode: intensity collapses, and the bandwidth roof takes over long before peak compute."
-            : "Decode territory: ~1 FLOP/byte. Everyone lives on the memory wall; bandwidth is the currency."}
+        {intensity > 100
+          ? "Prefill regime (high intensity): both accelerators hit their compute ceilings — the GPU's 989 TF peak leads."
+          : intensity > 10
+            ? "Transition regime: GPU hits its 295 FLOP/B knee first and slides down its HBM wall, while LPU stays on its compute ceiling."
+            : "Decode regime (~1 FLOP/B): both live on the memory wall. LPU's 80 TB/s SRAM fabric delivers 80 TF vs GPU's 3.35 TF."}
       </p>
     </div>
   );
@@ -167,8 +238,7 @@ export function QuantLadder() {
     <div className="panel" style={{ padding: "var(--s5)" }}>
       <div className="controls" style={{ marginBottom: "var(--s4)", flexWrap: "wrap" }}>
         {PRECISION_RUNGS.map((r) => (
-          <button key={r.name} className="chip"
-            style={bits === r.bits && (r.name !== "INT8" || bits === 8) && (r.name !== "FP8" || bits === 8) ? { color: "var(--iris)", borderColor: "var(--iris)" } : undefined}
+          <button key={r.name} className={"btn btnSm " + (bits === r.bits ? "btnPrimary" : "btnSecondary")}
             onClick={() => setBits(r.bits)}>{r.name}</button>
         ))}
         <span className="configChip">{paramsB}B MODEL · {gb.toFixed(1)} GB (was {gb32.toFixed(1)})</span>

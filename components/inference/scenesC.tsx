@@ -405,26 +405,28 @@ export function ColdStart() {
     { name: "WEIGHT LOAD", v: plan.modelLoadS, color: "var(--gold)" },
     { name: "KV / WARMUP", v: plan.kvWarmS, color: "var(--teal)" },
   ];
+  const activeSegs = segs.filter((s) => s.v > 0);
   const total = segs.reduce((a, s) => a + s.v, 0);
   return (
     <div className="panel" style={{ padding: "var(--s5)" }}>
       <div className="controls" style={{ marginBottom: "var(--s4)", flexWrap: "wrap" }}>
-        <button className={"chip" + (warm ? "" : "")} style={warm ? { color: "var(--lime)", borderColor: "var(--lime)" } : undefined}
+        <button className={"btn btnSm " + (warm ? "btnPrimary" : "btnSecondary")}
           onClick={() => setWarm((w) => !w)}>{warm ? "WARM POOL: ON" : "WARM POOL: OFF"}</button>
         <span className="configChip">FIRST TOKEN DELAY · {(ms / 1000).toFixed(1)} s</span>
       </div>
       <svg viewBox="0 0 900 190" role="img" aria-label="Cold start timeline segments"
         style={{ width: "100%", height: "auto", display: "block" }}>
-        {segs.map((s, i) => {
-          const before = segs.slice(0, i).reduce((a, x) => a + x.v, 0);
+        {activeSegs.map((s) => {
+          const idx = segs.indexOf(s);
+          const before = segs.slice(0, idx).reduce((a, x) => a + x.v, 0);
           const x = 40 + (before / total) * 820;
           const w = (s.v / total) * 820;
           return (
             <g key={s.name}>
               <rect x={x} y={60} width={Math.max(w, 3)} height={50} rx={8}
                 style={{ fill: s.color, fillOpacity: 0.3, stroke: s.color }} />
-              <text x={x + Math.max(w / 2, 20)} y={90} textAnchor="middle" className="lblMono" style={{ fontSize: 11 }}>{s.v.toFixed(1)}s</text>
-              <text x={x + Math.max(w / 2, 20)} y={140} textAnchor="middle" className="lblMono" style={{ fontSize: 10.5, fill: s.color }}>{s.name}</text>
+              <text x={x + w / 2} y={90} textAnchor="middle" className="lblMono" style={{ fontSize: 11 }}>{s.v.toFixed(1)}s</text>
+              <text x={x + w / 2} y={140} textAnchor="middle" className="lblMono" style={{ fontSize: 10.5, fill: s.color }}>{s.name}</text>
             </g>
           );
         })}
@@ -456,7 +458,7 @@ export function FinopsMig() {
           aria-label="Spot fraction" style={{ maxWidth: 220 }} onChange={(e) => setSpotFrac(Number(e.target.value))} />
         <span className="configChip">{spotFrac}% SPOT</span>
         {["1g.10gb", "3g.40gb", "7g.80gb"].map((p) => (
-          <button key={p} className="chip" style={profile === p ? { color: "var(--lime)", borderColor: "var(--lime)" } : undefined}
+          <button key={p} className={"btn btnSm " + (profile === p ? "btnPrimary" : "btnSecondary")}
             onClick={() => setProfile(p)}>{p}</button>
         ))}
       </div>
