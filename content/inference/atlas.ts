@@ -34,13 +34,13 @@ export const INF_TOPICS: InfTopic[] = [
       "Weights are frozen; only activations flow per request.",
       "No backprop, no optimizer state, no gradients — a fraction of training's memory.",
       "Autoregressive: each output token joins the input for the next step." ] },
-  { id: "train-vs-serve", domain: "foundations", title: "Training vs serving", kind: "concept",
+  { id: "train-vs-serve", domain: "foundations", title: "Training vs serving", kind: "scene", scene: "decode-loop",
     summary: "Different workloads with opposite bottlenecks.",
     points: [
       "Training: huge batches, days-long runs, compute-bound everywhere.",
       "Serving: small batches, millisecond SLOs, memory-bandwidth-bound decode.",
       "Inference runs on every user message forever — efficiency compounds too." ] },
-  { id: "request-lifecycle", domain: "foundations", title: "The request lifecycle", kind: "concept",
+  { id: "request-lifecycle", domain: "foundations", title: "The request lifecycle", kind: "scene", scene: "latency-timeline",
     summary: "Network ingress to detokenized egress, end to end.",
     points: [
       "Ingress and queueing happen before any GPU work is scheduled.",
@@ -77,7 +77,7 @@ export const INF_TOPICS: InfTopic[] = [
       "132 SMs, 64 warp slots each — resident warp density hides latency.",
       "Tensor Cores execute fused matrix-multiply-accumulate.",
       "Scheduling bubbles appear when occupancy drops." ] },
-  { id: "edge-deploy", domain: "silicon", title: "Edge vs datacenter", kind: "concept",
+  { id: "edge-deploy", domain: "silicon", title: "Edge vs datacenter", kind: "scene", scene: "silicon-map",
     summary: "Watts and thermals replace racks and power budget.",
     points: [
       "Mobile NPUs run quantized few-billion-parameter models offline.",
@@ -96,7 +96,7 @@ export const INF_TOPICS: InfTopic[] = [
       "Fused kernels remove intermediate global-memory round-trips.",
       "Dead nodes and folded constants shrink the launch count.",
       "Fewer launches mean less CPU-side dispatch overhead." ] },
-  { id: "sparsity-pruning", domain: "quantization", title: "Sparsity & pruning", kind: "concept",
+  { id: "sparsity-pruning", domain: "quantization", title: "Sparsity & pruning", kind: "scene", scene: "quant-ladder",
     summary: "Structure determines whether zeros buy speed.",
     points: [
       "2:4 structured sparsity executes at 2x on Tensor Core paths.",
@@ -109,7 +109,7 @@ export const INF_TOPICS: InfTopic[] = [
       "Autotuning searches schedules against the target's real memory system.",
       "The same graph compiles to different code per silicon generation." ] },
   /* 04 Runtime & memory */
-  { id: "runtime-engines", domain: "kv-economy", title: "Runtime engines", kind: "concept",
+  { id: "runtime-engines", domain: "kv-economy", title: "Runtime engines", kind: "scene", scene: "ai-compiler",
     summary: "ONNX Runtime, TensorRT, TensorFlow Lite, ExecuTorch.",
     points: [
       "Each engine pairs a graph format with per-hardware execution providers.",
@@ -133,7 +133,7 @@ export const INF_TOPICS: InfTopic[] = [
       "Radix trees match longest cached prefixes across requests.",
       "System prompts and multi-turn history hit cache every time.",
       "Large TTFT wins for templated workloads." ] },
-  { id: "flash-attention", domain: "kv-economy", title: "FlashAttention & kernels", kind: "concept",
+  { id: "flash-attention", domain: "kv-economy", title: "FlashAttention & kernels", kind: "scene", scene: "kv-cache",
     summary: "Tiled attention keeps the softmax in SRAM.",
     points: [
       "Never materializes the full NxN attention matrix in HBM.",
@@ -159,7 +159,7 @@ export const INF_TOPICS: InfTopic[] = [
       "Impossible tokens get -inf logits before the softmax.",
       "xgrammar and outlines implement it engine-side." ] },
   /* 06 Serving */
-  { id: "framework-landscape", domain: "batching", title: "Triton · Ollama · vLLM · SGLang", kind: "concept",
+  { id: "framework-landscape", domain: "batching", title: "Triton · Ollama · vLLM · SGLang", kind: "scene", scene: "continuous-batching",
     summary: "Four serving stacks, four philosophies.",
     points: [
       "Triton generalizes multi-model serving with ensembles.",
@@ -208,14 +208,14 @@ export const INF_TOPICS: InfTopic[] = [
       "HBM exhaustion pushes cold KV blocks to CPU or NVMe tiers.",
       "Cross-node transfers ride RDMA or NVLink-class fabric.",
       "Placement decides whether remote KV still beats recompute." ] },
-  { id: "hybrid-edge-cloud", domain: "distributed", title: "Edge-cloud hybrids", kind: "concept",
+  { id: "hybrid-edge-cloud", domain: "distributed", title: "Edge-cloud hybrids", kind: "scene", scene: "kv-offload",
     summary: "Cooperative inference loops split by latency budget.",
     points: [
       "Draft locally, verify in cloud, or route by difficulty.",
       "Multi-device pooling aggregates phones, gateways and edge servers.",
       "The handoff protocol is the hard engineering problem." ] },
   /* 08 Operations */
-  { id: "deployment-typologies", domain: "operations", title: "Containers to KServe", kind: "concept",
+  { id: "deployment-typologies", domain: "operations", title: "Containers to KServe", kind: "scene", scene: "cold-start",
     summary: "Docker standardizes the stack; Kubernetes scales it.",
     points: [
       "KServe adds canary rollouts and scale-to-zero on top.",
@@ -227,7 +227,7 @@ export const INF_TOPICS: InfTopic[] = [
       "Multi-GB model loads dwarf typical container start times.",
       "Snapshots, tiered caching and warm pools mitigate.",
       "Scale-to-zero economics collide with p95 latency promises." ] },
-  { id: "observability", domain: "operations", title: "Serving observability", kind: "concept",
+  { id: "observability", domain: "operations", title: "Serving observability", kind: "scene", scene: "finops-mig",
     summary: "Saturation, leaks, decay, drift, anomalies.",
     points: [
       "KV utilization and queue depth predict saturation before SLOs break.",

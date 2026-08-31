@@ -46,7 +46,7 @@ export default function InfAtlasBrowser() {
                 onClick={() => setOpenId(open ? null : t.id)}
                 onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), setOpenId(open ? null : t.id))}
                 style={{ display: "flex", alignItems: "baseline", gap: 12, cursor: "pointer" }}>
-                <span className="kicker" style={{ color }}>{t.kind === "scene" ? "◈ SCENE" : "▸ ENTRY"}</span>
+                <span className="kicker" style={{ color }}>{t.kind === "scene" ? "◈ SCENE" : "▸ CONCEPT"}</span>
                 <h3 style={{ margin: 0, fontSize: 17, fontWeight: 600, flex: 1 }}>{t.title}</h3>
               </header>
               <p style={{ margin: "6px 0 0", color: "var(--ink2)", fontSize: 14 }}>{t.summary}</p>

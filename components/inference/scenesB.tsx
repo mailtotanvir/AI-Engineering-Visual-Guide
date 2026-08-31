@@ -73,6 +73,9 @@ export function MemoryWall() {
   const gpu = rooflineTflops(989, 3.35, intensity);
   const lpu = rooflineTflops(750, 80, intensity);
   const yOf = (tf: number) => 200 - (tf / 1000) * 170;
+  const cx = 60 + t * 800;
+  const anchor = t > 0.75 ? "end" : "start";
+  const lx = t > 0.75 ? cx - 12 : cx + 12;
   return (
     <div className="panel" style={{ padding: "var(--s5)" }}>
       <div className="controls" style={{ marginBottom: "var(--s4)" }}>
@@ -80,18 +83,18 @@ export function MemoryWall() {
         <button className="btn btnSecondary btnSm" onClick={() => store.reset()}>⟳ RESET</button>
         <span className="configChip">ARITHMETIC INTENSITY · {intensity.toFixed(1)} FLOP/B</span>
       </div>
-      <svg viewBox="0 0 900 230" role="img" aria-label="Roofline sweep from compute-bound to memory-bound"
+      <svg viewBox="0 0 900 240" role="img" aria-label="Roofline sweep from compute-bound to memory-bound"
         style={{ width: "100%", height: "auto", display: "block" }}>
         <line x1={60} y1={200} x2={880} y2={200} stroke="var(--ink3)" />
         <line x1={60} y1={20} x2={60} y2={200} stroke="var(--ink3)" />
-        <text x={470} y={222} textAnchor="middle" className="lblMono">ARITHMETIC INTENSITY (FLOP per byte) →</text>
+        <text x={470} y={226} textAnchor="middle" className="lblMono">ARITHMETIC INTENSITY (FLOP per byte) →</text>
         <text x={20} y={110} className="lblMono" transform="rotate(-90 20 110)" textAnchor="middle">TFLOPS</text>
         <polyline points={`${60},${yOf(Math.min(989, 3.35 * 100))} 860,${yOf(3.35 * 100)}`}
           fill="none" stroke="var(--rose)" strokeWidth={2} strokeDasharray="6 5" />
-        <circle cx={60 + t * 800} cy={yOf(gpu)} r={7} style={{ fill: "var(--teal)" }} />
-        <circle cx={60 + t * 800} cy={yOf(lpu)} r={7} style={{ fill: "var(--gold)" }} />
-        <text x={80 + t * 800} y={yOf(gpu) - 12} className="lblMono" style={{ fill: "var(--teal)" }}>GPU {gpu.toFixed(0)} TF</text>
-        <text x={80 + t * 800} y={yOf(lpu) + 22} className="lblMono" style={{ fill: "var(--gold)" }}>LPU {lpu.toFixed(0)} TF</text>
+        <circle cx={cx} cy={yOf(gpu)} r={7} style={{ fill: "var(--teal)" }} />
+        <circle cx={cx} cy={yOf(lpu)} r={7} style={{ fill: "var(--gold)" }} />
+        <text x={lx} y={yOf(gpu) - 12} textAnchor={anchor} className="lblMono" style={{ fill: "var(--teal)" }}>GPU {gpu.toFixed(0)} TF</text>
+        <text x={lx} y={yOf(lpu) + 22} textAnchor={anchor} className="lblMono" style={{ fill: "var(--gold)" }}>LPU {lpu.toFixed(0)} TF</text>
         <text x={90} y={44} className="lblMono" style={{ fill: "var(--rose)" }}>memory-bound roof (bandwidth × intensity)</text>
       </svg>
       <p className="raceCaption" aria-live="polite">
