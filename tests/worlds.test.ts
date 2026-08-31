@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { WORLDS } from "@/content/worlds";
 
 describe("worlds registry", () => {
-  it("keeps the bar at eight disciplines", () => {
-    expect(WORLDS).toHaveLength(8);
+  it("keeps the bar at seven disciplines", () => {
+    expect(WORLDS).toHaveLength(7);
   });
   it("has unique ids and exactly four live worlds", () => {
     const ids = WORLDS.map((w) => w.id);
