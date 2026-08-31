@@ -11,8 +11,7 @@ const POSITION: Record<string, string> = {
   "training-scale": "west",
   "post-training": "east",
   evals: "southWest",
-  "ai-runtime": "southEast",
-  infrastructure: "south",
+  infrastructure: "southEast",
   "safety-alignment": "farSouth",
 };
 

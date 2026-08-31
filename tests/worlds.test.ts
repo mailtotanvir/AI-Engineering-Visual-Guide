@@ -9,7 +9,7 @@ describe("worlds registry", () => {
     const ids = WORLDS.map((w) => w.id);
     expect(new Set(ids).size).toBe(ids.length);
     const live = WORLDS.filter((w) => w.status === "live");
-    expect(live.map((w) => w.id)).toEqual(["cuda", "inference", "training-scale", "post-training"]);
+    expect(live.map((w) => w.id)).toEqual(["cuda", "training-scale", "post-training", "inference"]);
     live.forEach((w) => expect(w.href).toMatch(/^\//));
   });
   it("planned worlds expose no dead links", () => {
@@ -26,8 +26,8 @@ describe("worlds registry", () => {
   it("covers the required disciplines", () => {
     const ids = WORLDS.map((w) => w.id);
     for (const required of [
-      "cuda", "inference", "training-scale", "post-training",
-      "evals", "ai-runtime", "infrastructure", "safety-alignment",
+      "cuda", "training-scale", "post-training", "inference",
+      "evals", "infrastructure", "safety-alignment",
     ]) {
       expect(ids).toContain(required);
     }
