@@ -4,7 +4,7 @@ import {
   applySampling, kvBytesPerToken, kvCacheBytes, mb, softmax, tokenize,
 } from "@/lib/inference/engine";
 import { SPEC_STEPS } from "@/lib/inference/engine";
-import { INF_JOURNEY, infNeighbors } from "@/content/inference/journey";
+import { INF_JOURNEY, INF_MODULES, infModuleJourney, infNeighbors } from "@/content/inference/journey";
 import { INF_DOMAINS, INF_TOPICS } from "@/content/inference/atlas";
 
 describe("tokenizer", () => {
@@ -79,9 +79,19 @@ describe("speculative decoding pattern", () => {
 });
 
 describe("inference journey & atlas integrity", () => {
-  it("eight scenes with unique ids", () => {
-    expect(INF_JOURNEY).toHaveLength(8);
-    expect(new Set(INF_JOURNEY.map((j) => j.id)).size).toBe(8);
+  it("twenty-four scenes with unique ids and nums", () => {
+    expect(INF_JOURNEY).toHaveLength(24);
+    expect(new Set(INF_JOURNEY.map((j) => j.id)).size).toBe(24);
+    expect(new Set(INF_JOURNEY.map((j) => j.num)).size).toBe(24);
+  });
+  it("every scene maps to a real module", () => {
+    INF_JOURNEY.forEach((j) => {
+      expect(INF_MODULES.find((m) => m.id === j.module)).toBeDefined();
+    });
+    expect(INF_MODULES).toHaveLength(8);
+    INF_MODULES.forEach((m) => {
+      expect(infModuleJourney(m.id).length).toBeGreaterThanOrEqual(2);
+    });
   });
   it("neighbors are consistent across growth", () => {
     INF_JOURNEY.forEach((j, i) => {
@@ -91,8 +101,8 @@ describe("inference journey & atlas integrity", () => {
       void i;
     });
   });
-  it("atlas covers seven domains; scene entries resolve", () => {
-    expect(INF_DOMAINS).toHaveLength(7);
+  it("atlas covers eight domains; scene entries resolve", () => {
+    expect(INF_DOMAINS).toHaveLength(8);
     INF_TOPICS.forEach((t) => {
       expect(INF_DOMAINS.find((d) => d.id === t.domain)).toBeDefined();
       if (t.kind === "scene") {
