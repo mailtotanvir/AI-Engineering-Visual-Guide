@@ -5,12 +5,13 @@ import { INF_DOMAINS, INF_TOPICS } from "@/content/inference/atlas";
 
 const DOMAIN_COLORS: Record<string, string> = {
   foundations: "var(--teal)",
-  metrics: "var(--gold)",
-  "kv-economy": "var(--rose)",
-  batching: "var(--cyan)",
+  silicon: "var(--gold)",
   quantization: "var(--iris)",
+  "kv-economy": "var(--rose)",
   decoding: "var(--lime)",
-  deploy: "#FF9E7A",
+  batching: "var(--cyan)",
+  distributed: "#FF9E7A",
+  operations: "#B6F09C",
 };
 
 export default function InfAtlasBrowser() {

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { INF_JOURNEY, infIndex, infNeighbors } from "@/content/inference/journey";
+import { INF_JOURNEY, INF_MODULES, infIndex, infModuleOf, infNeighbors } from "@/content/inference/journey";
 
 export default function InfShell({
   id,
@@ -12,6 +12,7 @@ export default function InfShell({
 }) {
   const i = infIndex(id);
   const entry = INF_JOURNEY[i];
+  const mod = infModuleOf(id);
   const { prev, next } = infNeighbors(id);
 
   useEffect(() => {
@@ -33,11 +34,11 @@ export default function InfShell({
     <section id={`inf-${id}`} className="sceneSec" tabIndex={-1} aria-label={`Inference scene ${entry.num}, ${entry.title}`}>
       <div className="wrap">
         <nav className="crumbs" aria-label="Breadcrumb">
-          <Link href="/inference/">INFERENCE</Link> <i>/</i> JOURNEY <i>/</i> <b>{entry.kicker}</b>
+          <Link href="/inference/">INFERENCE</Link> <i>/</i> {mod ? <Link href={`/inference/#m-${mod.id}`}>MODULE {mod.num}</Link> : "JOURNEY"} <i>/</i> <b>{entry.kicker}</b>
         </nav>
         <div className="sec-head" style={{ marginBottom: "var(--s4)" }}>
           <div>
-            <p className="kicker"><b>SCENE {entry.num}</b> · {entry.title.toUpperCase()}</p>
+            <p className="kicker"><b>SCENE {entry.num} / 24</b> · {mod ? mod.name.toUpperCase() : entry.title.toUpperCase()}</p>
             <h2 className="sec-title">{entry.title}</h2>
             <p className="sec-sub">{entry.blurb}</p>
           </div>

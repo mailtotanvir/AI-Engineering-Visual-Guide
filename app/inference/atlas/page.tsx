@@ -13,8 +13,8 @@ export default function AtlasPage() {
           </nav>
           <div className="sec-head" style={{ marginBottom: "var(--s4)" }}>
             <div>
-              <p className="kicker"><b>THE ATLAS</b> · SEVEN DOMAINS</p>
-              <h2 className="sec-title">Every inference concept, mapped.</h2>
+              <p className="kicker"><b>THE ATLAS</b> · EIGHT DOMAINS</p>
+              <h2 className="sec-title">The AI Inference Architecture Handbook, mapped.</h2>
             </div>
           </div>
           <InfAtlasBrowser />

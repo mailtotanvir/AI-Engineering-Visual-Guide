@@ -317,11 +317,12 @@ export const RADIX_TREE: RadixNode[] = [
   { prefix: "/chat/turn-1..7", tokens: 1580, hits: 236, children: ["turn-8"] },
   { prefix: "/chat/turn-1..8", tokens: 210, hits: 88, children: [] },
 ];
-/** First-hit reuse: cached tokens of the longest matched prefix for a request. */
+/** Deepest-match reuse: cached tokens of the longest matched prefix for a request. */
 export function radixHitTokens(tree: RadixNode[], requestPrefix: string): number {
   const matches = tree.filter((n) => n.prefix !== "/" && requestPrefix.startsWith(n.prefix));
   if (!matches.length) return 0;
-  return Math.max(...matches.map((n) => n.tokens));
+  const best = matches.reduce((a, b) => (b.prefix.length > a.prefix.length ? b : a));
+  return best.tokens;
 }
 export function prefixSaveMs(prefillMsPerKtok: number, cachedTokens: number): number {
   return (cachedTokens / 1000) * prefillMsPerKtok;
