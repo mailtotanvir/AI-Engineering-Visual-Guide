@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { TimelineStore } from "@/lib/engine/timeline";
 import {
   bradleyTerry, cotTokens, dpoLoss, eloDelta, gae2, grpoSavedMemoryGB, jailbreakRate,
@@ -828,6 +829,7 @@ export function BenchmarkContam() {
           : sweep < 1
             ? `Scanning… ${found} leaked items flagged so far. The seen bar keeps climbing above its unseen twin.`
             : `${found} leaked items confirmed: an ${uplift.toFixed(1)}-point uplift, far outside the ±${hw.toFixed(1)} CI. This score measures memorization, not capability.`}
+        <br /><Link className="linkArrow" href="/evals/scenes/ngram-contam/">GO DEEPER: CONTAMINATION DETECTION IN THE EVALUATION WORLD →</Link>
       </p>
     </div>
   );
@@ -866,6 +868,7 @@ export function LlmJudgeBias() {
       </svg>
       <p className="raceCaption" aria-live="polite">
         {posBias > 0.15 ? "This judge prefers the first answer it reads — close comparisons flip with answer order. Run every pair twice, swapped." : "Bias within tolerance. Still: report length-controlled, swap-corrected win rates, and never a same-family judge."}
+        <br /><Link className="linkArrow" href="/evals/scenes/judge-bias/">GO DEEPER: THE JUDGE BIAS AUDIT IN THE EVALUATION WORLD →</Link>
       </p>
     </div>
   );
@@ -904,6 +907,7 @@ export function EvalUncertainty() {
       </svg>
       <p className="raceCaption" aria-live="polite">
         {hw > 3 ? `At ${n} items the interval is ±${hw.toFixed(1)} points — most adjacent-leaderboard gaps are noise. Claim improvement only when intervals separate.` : `n=${n} tightens the interval to ±${hw.toFixed(1)} points — now a 1.4-point gap can mean something.`}
+        <br /><Link className="linkArrow" href="/evals/scenes/confidence-intervals/">GO DEEPER: CONFIDENCE INTERVALS IN THE EVALUATION WORLD →</Link>
       </p>
     </div>
   );

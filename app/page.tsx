@@ -48,7 +48,7 @@ export default function Home() {
         <div className="wrap">
           <div className="sec-head" style={{ marginBottom: "var(--s4)" }}>
             <div>
-              <p className="kicker"><b>WORLDS</b> · EIGHT DISCIPLINES · TWO LIVE TODAY</p>
+              <p className="kicker"><b>WORLDS</b> · SEVEN DISCIPLINES · FIVE LIVE TODAY</p>
               <h2 className="sec-title">A universe of working systems.</h2>
               <p className="sec-sub">Each signal is a physical journey. Touch one and its machine wakes up.</p>
             </div>

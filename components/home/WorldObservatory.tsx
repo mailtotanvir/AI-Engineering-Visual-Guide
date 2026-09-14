@@ -47,6 +47,9 @@ export function SystemGlyph({ world, reduced }: { world: World; reduced: boolean
             {world.id === "training-scale" && index === 2 && Array.from({ length: 3 }).map((_, grad) => (
               <circle key={grad} cx={x - 11 + grad * 11} cy="110" r="3" fill={world.accent} opacity={.4 + grad * .25} />
             ))}
+            {world.id === "evals" && index === 2 && (
+              <rect x={x - 8} y="102" width="16" height="16" rx={3} fill="none" stroke={world.accent} strokeWidth={2} />
+            )}
             <text x={x} y="158" textAnchor="middle">{label}</text>
           </g>
         );

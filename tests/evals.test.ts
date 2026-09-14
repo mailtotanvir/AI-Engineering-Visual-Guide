@@ -12,6 +12,7 @@ import {
 import { EVAL_JOURNEY, EVAL_MODULES, evalModuleJourney, evalNeighbors } from "@/content/evals/journey";
 import { SCENE_NOTES } from "@/content/evals/notes";
 import { EVAL_DOMAINS, EVAL_TOPICS } from "@/content/evals/atlas";
+import { WORLDS } from "@/content/worlds";
 
 describe("foundations math", () => {
   it("accuracy and error rate are complementary", () => {
@@ -260,5 +261,15 @@ describe("notes & atlas coverage", () => {
   it("covers at least 30 topics with unique ids", () => {
     expect(EVAL_TOPICS.length).toBeGreaterThanOrEqual(30);
     expect(new Set(EVAL_TOPICS.map((t) => t.id)).size).toBe(EVAL_TOPICS.length);
+  });
+});
+
+describe("world registry", () => {
+  it("evaluation is live with href, scene and entry counts", () => {
+    const w = WORLDS.find((x) => x.id === "evals")!;
+    expect(w.status).toBe("live");
+    expect(w.href).toBe("/evals/");
+    expect(w.scenes).toBe(24);
+    expect(w.entries).toBe(32);
   });
 });
