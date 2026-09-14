@@ -9,8 +9,8 @@ Follow work through a GPU. Follow a prompt through an inference engine. Pause ti
 
 [**Enter the live encyclopedia →**](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/) · [Explore CUDA](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/cuda/) · [Follow a token](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/inference/)
 
-[![Tests](https://img.shields.io/badge/tests-72%20passing-46E3C8?style=flat-square)](#quality-contract)
-[![Worlds](https://img.shields.io/badge/worlds-2%20live%20%C2%B7%206%20forming-A48FFF?style=flat-square)](#the-universe)
+[![Tests](https://img.shields.io/badge/tests-186%20passing-46E3C8?style=flat-square)](#quality-contract)
+[![Worlds](https://img.shields.io/badge/worlds-5%20live%20%C2%B7%202%20forming-A48FFF?style=flat-square)](#the-universe)
 [![Next.js](https://img.shields.io/badge/Next.js-14-5CC8FF?style=flat-square)](#run-it-locally)
 [![Static export](https://img.shields.io/badge/deploy-GitHub%20Pages-FFC46B?style=flat-square)](#deployment)
 
@@ -56,7 +56,6 @@ AI ENGINEERING
 ├── Training                data → batches → gradients → weights
 ├── Post-Training           traces → preferences → signal → behavior
 ├── Evaluation              input → model → judge → regression
-├── AI Runtime              request → plan → tool → state
 ├── Infrastructure          traffic → scheduler → GPUs → storage
 └── Safety                  prompt → policy → decision → monitor
 ```
@@ -64,17 +63,16 @@ AI ENGINEERING
 | World | Status | The journey |
 | --- | :---: | --- |
 | **CUDA Engineering** | **Live** | Ten scenes from one million additions to a working kernel |
-| **Inference Engineering** | **Live** | Eight scenes following one prompt through an LLM serving system |
-| Training at Scale | Forming | Data, distributed compute, gradients, and weight updates |
-| Post-Training & Distillation | Forming | Supervision, preferences, optimization, and behavior shaping |
-| Evaluation | Forming | From model output to evidence, scores, and regression gates |
-| AI Runtime | Forming | Agent loops, tool calls, observations, and state |
+| **Inference Engineering** | **Live** | Twenty-four scenes following one prompt through an LLM serving system |
+| **Training at Scale** | **Live** | Twenty-one scenes from data and batches to gradients and weights |
+| **Post-Training & Distillation** | **Live** | Twenty-four scenes from base weights to aligned behavior |
+| **Evaluation** | **Live** | Twenty-four scenes from model output to evidence and regression gates |
 | Infrastructure | Forming | Scheduling, accelerators, networks, storage, cost, and reliability |
 | Safety & Alignment | Forming | Policies, guardrails, monitoring, and failure surfaces |
 
 Planned worlds are intentionally shown as distant signals. They establish the shape of the universe without pretending unfinished material is complete.
 
-## Two worlds are alive today
+## Five worlds are alive today
 
 ### World 01 · CUDA Engineering
 
@@ -116,6 +114,66 @@ The result makes an important truth tangible:
 > LLM serving is a physics problem wearing a chat interface.
 
 [**Enter Inference World →**](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/inference/) · [Browse the Inference Atlas](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/inference/atlas/)
+
+### World 03 · Training at Scale
+
+**Watch information become a change in the model.**
+
+Twenty-one scenes across six modules follow data from raw corpus to updated weights:
+
+```text
+data diet → objectives → scaling laws → 3D parallelism
+        → precision numerics → run diagnostics
+```
+
+Along the way you can:
+
+- starve and enrich a data diet and watch loss respond;
+- route tokens through data, tensor, and pipeline parallel layouts;
+- shrink precision and see the numerical error budget move;
+- diagnose a diverging run from its loss curves.
+
+[**Enter Training World →**](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/training/) · [Browse the Training Atlas](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/training/atlas/)
+
+### World 04 · Post-Training & Distillation
+
+**See raw capability shaped into useful behavior.**
+
+Twenty-four scenes across eight modules follow a base model to a steerable assistant:
+
+```text
+SFT → data engineering → LoRA math → RLHF / DPO
+  → verifiable rewards → safety → evals → deployment
+```
+
+Along the way you can:
+
+- mask prompts and watch the loss focus on completions;
+- resize LoRA rank and see the single-GPU memory bill change;
+- tune the KL anchor and feel PPO's leash tighten;
+- audit an LLM judge for positional and length bias.
+
+[**Enter Post-Training World →**](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/posttrain/) · [Browse the Post-Training Atlas](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/posttrain/atlas/)
+
+### World 05 · Evaluation
+
+**Turn model behavior into evidence you can trust.**
+
+Twenty-four scenes across eight modules build the measurement instruments end to end:
+
+```text
+eval loop → benchmark design → contamination → scoring
+        → LLM judges → human agreement → statistics → regression gates
+```
+
+Along the way you can:
+
+- sweep a dedup scanner and watch memorized accuracy detach from real capability;
+- swap answer order and see a judge's position bias evaporate under averaging;
+- grow a benchmark and watch confidence intervals tighten as 1/√n;
+- set per-capability regression budgets and block a release on one broken axis.
+
+[**Enter Evaluation World →**](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/evals/) · [Browse the Evaluation Atlas](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/evals/atlas/)
 
 ## What makes this different
 
@@ -175,12 +233,18 @@ components/
   journey/              shared scene shell and navigation
   exhibit/              timelines, code synchronization, transport controls
   inference/            inference scenes and atlas browser
+  training/             training scenes and atlas browser
+  posttrain/            post-training scenes and atlas browser
+  evals/                evaluation scenes and atlas browser
   scenes/               CUDA journey scenes
   world/                shared world identity components
 content/
   worlds.ts             declarative world registry and physical flows
   cuda/                  CUDA journey and atlas content
   inference/             inference journey and atlas content
+  training/              training journey, atlas, and notes
+  posttrain/             post-training journey, atlas, and notes
+  evals/                 evaluation journey, atlas, and notes
 lib/
   engine/                deterministic, scrub-safe simulation engine
   scene/                 imperative SVG rendering over simulation state
@@ -213,13 +277,13 @@ npm run preview   # serve the exported site on port 4173
 
 ## Quality contract
 
-The project currently ships with **72 automated tests** across six suites. They protect the parts that visual polish can easily obscure:
+The project currently ships with **186 automated tests** across ten suites. They protect the parts that visual polish can easily obscure:
 
 - deterministic and reversible simulation state;
 - valid stage transitions and event ordering;
 - journey continuity and route integrity;
 - atlas coverage and interactive entry contracts;
-- inference engine behavior;
+- inference, training, post-training, and evaluation engine behavior;
 - unique, complete world definitions with no dead planned-world links.
 
 Before a change is considered complete:

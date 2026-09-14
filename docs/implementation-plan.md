@@ -322,3 +322,17 @@ INF    inference engineering encyclopedia      ✅ BUILT — /inference: 8-scene
                                                    sampling playground, speculative decoding) +
                                                    7-domain atlas (17 entries). Mobile-first CSS.
                                                    15 new tests; 66 total green.
+
+── Evaluation world expansion ──────────────────────────────────────────────────
+EVAL   evaluation encyclopedia                 ✅ BUILT — /evals: 24-scene journey in 8 modules
+                                                   (eval loop, capability/alignment, static-vs-arena,
+                                                   item anatomy, difficulty/discrimination, coverage,
+                                                   contamination, canaries, rotation, exact/F1,
+                                                   BLEU/ROUGE, verifiers, rubrics, pairwise, bias audit,
+                                                   annotation, kappa, arena Elo, CIs, McNemar,
+                                                   bootstrap/Holm, CI gates, golden sets, drift) +
+                                                   8-domain atlas (32 entries), deterministic
+                                                   lib/evals/engine (40+ pinned functions), notes for
+                                                   all 24 scenes. Cross-links from post-training
+                                                   module 7 into the deep exhibits. 41 new tests;
+                                                   186 total green.
