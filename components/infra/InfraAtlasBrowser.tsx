@@ -26,6 +26,7 @@ export default function InfraAtlasBrowser() {
         {INFRA_DOMAINS.map((d) => (
           <button
             key={d.id}
+            type="button"
             role="tab"
             aria-selected={domain === d.id}
             className={"atlasTab" + (domain === d.id ? " on" : "")}
@@ -59,13 +60,9 @@ export default function InfraAtlasBrowser() {
                 transition: "all 0.2s ease",
                 background: open ? "var(--bg3)" : "var(--bg2)",
               }}
-              onClick={() => setOpenId(open ? null : t.id)}
+              onClick={() => setOpenId((curr) => (curr === t.id ? null : t.id))}
             >
               <header
-                role="button"
-                tabIndex={0}
-                aria-expanded={open}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), setOpenId(open ? null : t.id))}
                 style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "space-between" }}
               >
                 <div style={{ display: "flex", alignItems: "baseline", gap: 10, flex: 1 }}>
