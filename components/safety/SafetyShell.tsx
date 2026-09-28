@@ -72,7 +72,7 @@ export default function SafetyShell({
                 style={activeTab === "deepdive" ? { borderColor: "var(--lime)", color: "var(--lime)" } : undefined}
                 onClick={() => setActiveTab("deepdive")}
               >
-                📖 TECHNICAL BREAKDOWN &amp; MATH
+                📖 ARCHITECTURE &amp; FORMULATION
               </button>
             </div>
           </header>

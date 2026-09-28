@@ -51,11 +51,11 @@ export default function TrainShell({
         {/* Interactive Exhibit Component */}
         {children}
 
-        {/* Natural Technical Breakdown & Math */}
+        {/* Natural Architecture & Formulation */}
         {note && (
           <article className="stepperCard" style={{ marginTop: "var(--s5)", padding: "var(--s5)", background: "var(--bg2)", border: "1px solid var(--hair2)", borderRadius: 12 }}>
             <div className="controls" style={{ marginBottom: "var(--s3)" }}>
-              <span className="kicker" style={{ color: "var(--gold)" }}>TECHNICAL BREAKDOWN</span>
+              <span className="kicker" style={{ color: "var(--gold)" }}>ARCHITECTURE &amp; FORMULATION</span>
               <span className="configChip">{note.module}</span>
             </div>
             
