@@ -53,6 +53,9 @@ export function SystemGlyph({ world, reduced }: { world: World; reduced: boolean
             {world.id === "infrastructure" && index === 2 && (
               <polygon points={`${x - 8},118 ${x},102 ${x + 8},118`} fill="none" stroke={world.accent} strokeWidth={1.5} />
             )}
+            {world.id === "safety-alignment" && index === 2 && (
+              <polygon points={`${x},98 ${x + 9},108 ${x},122 ${x - 9},108`} fill="none" stroke={world.accent} strokeWidth={1.8} />
+            )}
             <text x={x} y={158} textAnchor="middle">{label}</text>
           </g>
         );
