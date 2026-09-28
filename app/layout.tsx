@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { MotionProvider } from "@/components/shell/MotionProvider";
-import TopBar from "@/components/shell/TopBar";
+import AppShell from "@/components/shell/AppShell";
 
 export const metadata: Metadata = {
   title: "AI Engineering Visual Encyclopedia",
@@ -38,16 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <MotionProvider>
-          <TopBar />
-          {children}
-          <footer className="site">
-            <div className="wrap footIn">
-              <span>
-                AI ENGINEERING VISUAL ENCYCLOPEDIA · worlds: CUDA · INFERENCE · more coming
-              </span>
-              <span className="kicker">SEE THE MACHINE THINK</span>
-            </div>
-          </footer>
+          <AppShell>
+            {children}
+          </AppShell>
         </MotionProvider>
       </body>
     </html>
