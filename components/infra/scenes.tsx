@@ -131,7 +131,7 @@ export function NvlinkTopology() {
         {gpus.map((g) => (
           <g key={g.id}>
             <rect x={g.x - 34} y={g.y - 20} width={68} height={40} rx={8} fill="var(--bg2)" stroke="var(--teal)" strokeWidth={1.5} />
-            <text x={g.x} y={g.y - 2} textAnchor="middle" fill="var(--ink1)" fontSize={12} fontWeight="600">
+            <text x={g.x} y={g.y - 2} textAnchor="middle" fill="var(--ink)" fontSize={12} fontWeight="600">
               {g.name}
             </text>
             <text x={g.x} y={g.y + 12} textAnchor="middle" fill="var(--ink2)" fontSize={9.5} fontFamily="var(--font-m, monospace)">
@@ -187,7 +187,7 @@ export function PcieCxlBottleneck() {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
         <div style={{ background: "var(--bg3)", padding: 16, borderRadius: 8, borderLeft: "3px solid " + (isCxl ? "var(--cyan)" : "#FF9E7A") }}>
           <div style={{ fontSize: 12, color: "var(--ink2)", textTransform: "uppercase" }}>Transfer Latency & Time</div>
-          <div style={{ fontSize: 28, fontWeight: "bold", color: "var(--ink1)", margin: "4px 0" }}>
+          <div style={{ fontSize: 28, fontWeight: "bold", color: "var(--ink)", margin: "4px 0" }}>
             {transferTimeMs.toFixed(2)} <span style={{ fontSize: 16 }}>ms</span>
           </div>
           <div style={{ fontSize: 13, color: "var(--ink2)" }}>Effective Throughput: <b>{bwGBs} GB/s</b> (Bus Latency: {latencyUs} µs)</div>
@@ -204,7 +204,7 @@ export function PcieCxlBottleneck() {
 
       <svg viewBox="0 0 700 120" role="img" aria-label="Host to Device Memory Pipeline" style={{ width: "100%", height: "auto" }}>
         <rect x={20} y={25} width={160} height={70} rx={8} fill="var(--bg2)" stroke="var(--ink3)" />
-        <text x={100} y={55} textAnchor="middle" fill="var(--ink1)" fontSize={13} fontWeight="bold">HOST CPU RAM</text>
+        <text x={100} y={55} textAnchor="middle" fill="var(--ink)" fontSize={13} fontWeight="bold">HOST CPU RAM</text>
         <text x={100} y={75} textAnchor="middle" fill="var(--ink2)" fontSize={11}>{isPinned ? "Pinned Pages (DMA Locked)" : "Paged Virtual Memory"}</text>
 
         <line x1={180} y1={60} x2={520} y2={60} stroke={isCxl ? "var(--cyan)" : "#FF9E7A"} strokeWidth={3} strokeDasharray={isPinned ? "none" : "6,4"} />
@@ -214,7 +214,7 @@ export function PcieCxlBottleneck() {
         </text>
 
         <rect x={520} y={25} width={160} height={70} rx={8} fill="var(--bg2)" stroke="var(--teal)" />
-        <text x={600} y={55} textAnchor="middle" fill="var(--ink1)" fontSize={13} fontWeight="bold">GPU HBM3e</text>
+        <text x={600} y={55} textAnchor="middle" fill="var(--ink)" fontSize={13} fontWeight="bold">GPU HBM3e</text>
         <text x={600} y={75} textAnchor="middle" fill="var(--teal)" fontSize={11}>3.35 TB/s Local Bus</text>
       </svg>
     </div>
@@ -326,9 +326,9 @@ export function HgxNodeAnatomy() {
           {/* CPUs */}
           <g onClick={() => setSelectedComp("cpu")} style={{ cursor: "pointer" }}>
             <rect x={35} y={60} width={80} height={50} rx={6} fill={selectedComp === "cpu" ? "rgba(70,227,200,0.3)" : "var(--bg2)"} stroke="var(--teal)" strokeWidth={1.5} />
-            <text x={75} y={85} textAnchor="middle" fill="var(--ink1)" fontSize={11} fontWeight="bold">CPU 0</text>
+            <text x={75} y={85} textAnchor="middle" fill="var(--ink)" fontSize={11} fontWeight="bold">CPU 0</text>
             <rect x={35} y={130} width={80} height={50} rx={6} fill={selectedComp === "cpu" ? "rgba(70,227,200,0.3)" : "var(--bg2)"} stroke="var(--teal)" strokeWidth={1.5} />
-            <text x={75} y={155} textAnchor="middle" fill="var(--ink1)" fontSize={11} fontWeight="bold">CPU 1</text>
+            <text x={75} y={155} textAnchor="middle" fill="var(--ink)" fontSize={11} fontWeight="bold">CPU 1</text>
           </g>
 
           {/* NVSwitches */}
@@ -376,7 +376,7 @@ export function HgxNodeAnatomy() {
 
         <div style={{ background: "var(--bg2)", padding: 18, borderRadius: 8, border: "1px solid var(--hair2)" }}>
           <span className="kicker" style={{ color: "#FF9E7A" }}>{curr.role}</span>
-          <h3 style={{ margin: "6px 0 10px 0", fontSize: 18, color: "var(--ink1)" }}>{curr.title}</h3>
+          <h3 style={{ margin: "6px 0 10px 0", fontSize: 18, color: "var(--ink)" }}>{curr.title}</h3>
           <p style={{ fontSize: 14, lineHeight: 1.5, color: "var(--ink2)", marginBottom: 14 }}>{curr.desc}</p>
           <div style={{ background: "var(--bg3)", padding: 10, borderRadius: 6, borderLeft: "3px solid #FF9E7A" }}>
             <div style={{ fontSize: 11, color: "var(--ink2)", textTransform: "uppercase" }}>Bandwidth / Spec</div>
@@ -429,7 +429,7 @@ export function InfinibandVsRoce() {
 
       <svg viewBox="0 0 700 130" role="img" aria-label="PFC Headroom vs Credit Buffer" style={{ width: "100%", height: "auto" }}>
         <rect x={20} y={30} width={200} height={70} rx={6} fill="var(--bg2)" stroke="var(--ink3)" />
-        <text x={120} y={55} textAnchor="middle" fill="var(--ink1)" fontSize={12} fontWeight="bold">SENDER NIC</text>
+        <text x={120} y={55} textAnchor="middle" fill="var(--ink)" fontSize={12} fontWeight="bold">SENDER NIC</text>
         <text x={120} y={75} textAnchor="middle" fill="var(--ink2)" fontSize={10.5}>400 Gbps Output Queue</text>
 
         <line x1={220} y1={65} x2={460} y2={65} stroke="var(--cyan)" strokeWidth={2.5} />
@@ -438,7 +438,7 @@ export function InfinibandVsRoce() {
         </text>
 
         <rect x={460} y={30} width={220} height={70} rx={6} fill="var(--bg2)" stroke="#FF9E7A" />
-        <text x={570} y={55} textAnchor="middle" fill="var(--ink1)" fontSize={12} fontWeight="bold">SWITCH INGRESS BUFFER</text>
+        <text x={570} y={55} textAnchor="middle" fill="var(--ink)" fontSize={12} fontWeight="bold">SWITCH INGRESS BUFFER</text>
         <rect x={480} y={68} width={180} height={18} rx={4} fill="var(--bg3)" stroke="var(--ink3)" />
         <rect x={480} y={68} width={Math.min(180, (headroomBytes / 200000) * 180)} height={18} rx={4} fill="#FF9E7A" opacity={0.7} />
         <text x={570} y={81} textAnchor="middle" fill="#fff" fontSize={9.5} fontFamily="var(--font-m, monospace)">
@@ -599,14 +599,14 @@ export function IncastAdaptiveRouting() {
 
         {/* Switch Core */}
         <rect x={320} y={30} width={140} height={100} rx={8} fill="#1F2937" stroke={bufferDropRisk ? "var(--rose)" : "var(--gold)"} strokeWidth={2} />
-        <text x={390} y={60} textAnchor="middle" fill="var(--ink1)" fontSize={12} fontWeight="bold">EGRESS SWITCH</text>
+        <text x={390} y={60} textAnchor="middle" fill="var(--ink)" fontSize={12} fontWeight="bold">EGRESS SWITCH</text>
         <text x={390} y={80} textAnchor="middle" fill={bufferDropRisk ? "var(--rose)" : "var(--teal)"} fontSize={11}>
           {bufferDropRisk ? "BUFFER OVERFLOW (DROPS)" : isAdaptive ? "SPRAY BALANCED" : "STABLE QUEUE"}
         </text>
 
         {/* Receiver */}
         <rect x={550} y={55} width={110} height={50} rx={6} fill="var(--bg2)" stroke="var(--teal)" strokeWidth={1.5} />
-        <text x={605} y={85} textAnchor="middle" fill="var(--ink1)" fontSize={12} fontWeight="bold">RECEIVER NIC</text>
+        <text x={605} y={85} textAnchor="middle" fill="var(--ink)" fontSize={12} fontWeight="bold">RECEIVER NIC</text>
         <line x1={460} y1={80} x2={550} y2={80} stroke="var(--teal)" strokeWidth={3} />
       </svg>
       <p className="raceCaption" style={{ marginTop: 10 }}>
@@ -726,7 +726,7 @@ export function DataIngestStreaming() {
 
       <div style={{ background: "var(--bg3)", padding: 16, borderRadius: 8 }}>
         <div style={{ fontSize: 13, color: "var(--ink2)" }}>Ring Buffer Ingestion Pipeline Throughput:</div>
-        <div style={{ fontSize: 26, fontWeight: "bold", color: "var(--ink1)", marginTop: 4 }}>
+        <div style={{ fontSize: 26, fontWeight: "bold", color: "var(--ink)", marginTop: 4 }}>
           {ingestThroughputGBs.toFixed(1)} GB/s
         </div>
       </div>

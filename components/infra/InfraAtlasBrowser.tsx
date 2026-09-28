@@ -17,7 +17,7 @@ const DOMAIN_COLORS: Record<string, string> = {
 
 export default function InfraAtlasBrowser() {
   const [domain, setDomain] = useState("silicon-node");
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [openId, setOpenId] = useState<string | null>("t-nvlink-topology");
   const topics = INFRA_TOPICS.filter((t) => t.domain === domain);
 
   return (
@@ -32,7 +32,8 @@ export default function InfraAtlasBrowser() {
             style={domain === d.id ? { borderColor: DOMAIN_COLORS[d.id], color: DOMAIN_COLORS[d.id] } : undefined}
             onClick={() => {
               setDomain(d.id);
-              setOpenId(null);
+              const firstTopic = INFRA_TOPICS.find((t) => t.domain === d.id);
+              setOpenId(firstTopic ? firstTopic.id : null);
             }}
           >
             <b style={{ opacity: 0.7 }}>{d.num}</b>&nbsp;{d.name}
@@ -49,35 +50,58 @@ export default function InfraAtlasBrowser() {
           const open = openId === t.id;
           const color = DOMAIN_COLORS[t.domain] || "#FF9E7A";
           return (
-            <article key={t.id} className={"topicCard" + (open ? " open" : "")} style={{ borderLeftColor: color }}>
+            <article
+              key={t.id}
+              className={"topicCard" + (open ? " open" : "")}
+              style={{
+                borderLeftColor: color,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                background: open ? "var(--bg3)" : "var(--bg2)",
+              }}
+              onClick={() => setOpenId(open ? null : t.id)}
+            >
               <header
                 role="button"
                 tabIndex={0}
                 aria-expanded={open}
-                onClick={() => setOpenId(open ? null : t.id)}
                 onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), setOpenId(open ? null : t.id))}
-                style={{ display: "flex", alignItems: "baseline", gap: 12, cursor: "pointer" }}
+                style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "space-between" }}
               >
-                <span className="kicker" style={{ color }}>{t.kind === "scene" ? "◈ SCENE" : "▸ ENTRY"}</span>
-                <h3 style={{ margin: 0, fontSize: 17, fontWeight: 600, flex: 1 }}>{t.title}</h3>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 10, flex: 1 }}>
+                  <span className="kicker" style={{ color }}>{t.kind === "scene" ? "◈ SCENE" : "▸ ENTRY"}</span>
+                  <h3 style={{ margin: 0, fontSize: 17, fontWeight: 600, color: "var(--ink)" }}>{t.title}</h3>
+                </div>
+                <span style={{ color: "var(--ink3)", fontSize: 13, fontFamily: "var(--font-m)" }}>
+                  {open ? "▲ COLLAPSE" : "▼ EXPAND"}
+                </span>
               </header>
-              <p style={{ margin: "6px 0 0", color: "var(--ink2)", fontSize: 14 }}>{t.summary}</p>
+
+              <p style={{ margin: "8px 0 0", color: "var(--ink2)", fontSize: 14 }}>{t.summary}</p>
+
               {open && (
-                <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none" }}>
-                  {t.points.map((pt) => (
-                    <li key={pt} style={{ display: "flex", gap: 10, padding: "5px 0", fontSize: 13.5, color: "var(--ink2)" }}>
-                      <i style={{ width: 6, height: 6, borderRadius: 2, background: color, flexShrink: 0, marginTop: 7 }} />
-                      {pt}
-                    </li>
-                  ))}
+                <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid var(--hair2)" }}>
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+                    {t.points.map((pt) => (
+                      <li key={pt} style={{ display: "flex", gap: 10, padding: "6px 0", fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.5 }}>
+                        <i style={{ width: 6, height: 6, borderRadius: 2, background: color, flexShrink: 0, marginTop: 7 }} />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
                   {t.kind === "scene" && t.scene && (
-                    <li style={{ paddingTop: 10 }}>
-                      <Link className="linkArrow" href={`/infra/scenes/${t.scene}/`}>
-                        OPEN THE EXHIBIT →
+                    <div style={{ marginTop: 12 }}>
+                      <Link
+                        className="btn btnPrimary btnSm"
+                        href={`/infra/scenes/${t.scene}/`}
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+                      >
+                        OPEN SCENE EXHIBIT →
                       </Link>
-                    </li>
+                    </div>
                   )}
-                </ul>
+                </div>
               )}
             </article>
           );

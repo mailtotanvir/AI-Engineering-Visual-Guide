@@ -51,7 +51,7 @@ export function GangSchedulingKueue() {
 
         <div style={{ background: "var(--bg3)", padding: 14, borderRadius: 8 }}>
           <div style={{ fontSize: 12, color: "var(--ink2)" }}>ALLOCATION MECHANISM</div>
-          <p style={{ margin: "4px 0 0 0", fontSize: 13, color: "var(--ink1)", lineHeight: 1.4 }}>
+          <p style={{ margin: "4px 0 0 0", fontSize: 13, color: "var(--ink)", lineHeight: 1.4 }}>
             {isGangActive
               ? "All 24 ranks scheduled simultaneously. If full quota is unavailable, job waits in queue without holding GPUs idle."
               : "Partial scheduling assigns 16 ranks to Job 3 while 8 ranks are missing. All jobs freeze waiting for ranks."}

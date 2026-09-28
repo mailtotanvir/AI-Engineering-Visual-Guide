@@ -32,7 +32,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Bisection Bandwidth Formulation",
-      equation: "B_{bisection} = \\frac{N_{GPU}}{2} \\times L_{links} \\times BW_{link} \\times 2 \\quad \\text{[Bidirectional]}",
+      equation: "B_bisection = (N_GPU / 2) × L_links × BW_link × 2  [Bidirectional]",
       explanation: "For an 8-GPU H100 baseboard with 18 NVLink-4 links per GPU running at 50 GB/s bidirectional (25 GB/s each direction), bisection bandwidth across any bisection cut equals 4 GPUs * 18 links * 50 GB/s = 3.6 TB/s total bandwidth.",
     },
     realWorldEngineering: [
@@ -62,7 +62,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Effective Transfer Latency Model",
-      equation: "T_{transfer} = \\tau_{latency} + \\frac{S_{payload}}{BW_{effective}} \\quad \\text{where } BW_{effective} = \\eta \\cdot BW_{raw}",
+      equation: "T_transfer = τ_latency + (S_payload / BW_effective),  where BW_effective = η × BW_raw",
       explanation: "For a 1 GB batch transferred over PCIe Gen5 x16 (raw 64 GB/s, efficiency eta = 0.85 -> 54.4 GB/s), with 4.5 microseconds bus initiation latency, total transfer time is ~18.38 ms. Over NVLink at 900 GB/s, the same transfer takes only 1.11 ms.",
     },
     realWorldEngineering: [
@@ -92,7 +92,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Attainable Performance Formulation",
-      equation: "P_{attainable} = \\min\\left( P_{peak}, \\; I_{arithmetic} \\times BW_{mem} \\right) \\quad \\text{[FLOP/s]}",
+      equation: "P_attainable = min(P_peak,  I_arithmetic × BW_mem)  [FLOP/s]",
       explanation: "When operational intensity I < (P_peak / BW_mem), attainable compute scales linearly with memory bandwidth. Only when I exceeds the roofline knee does performance reach the horizontal ceiling of peak tensor core throughput.",
     },
     realWorldEngineering: [
@@ -122,7 +122,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Intra-Node vs Inter-Node Bandwidth Ratio",
-      equation: "R_{scale} = \\frac{BW_{NVLink}}{BW_{NIC}} = \\frac{900 \\text{ GB/s}}{50 \\text{ GB/s}} = 18\\times",
+      equation: "R_scale = BW_NVLink / BW_NIC = (900 GB/s) / (50 GB/s) = 18×",
       explanation: "With 900 GB/s NVLink per GPU and a 400 Gbps (50 GB/s) NIC per GPU, intra-node bandwidth is 18x higher than inter-node fabric bandwidth. This physical asymmetry requires 3D parallelism to strictly isolate high-frequency tensor parallel collectives within the node.",
     },
     realWorldEngineering: [
@@ -152,7 +152,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "PFC Headroom Buffer Requirement",
-      equation: "B_{headroom} = \\left( 2 \\times \\tau_{prop} + \\tau_{switch} \\right) \\times BW + \\text{Jitter Margin}",
+      equation: "B_headroom = (2 × τ_prop + τ_switch) × BW + Margin_jitter",
       explanation: "For a 100-meter fiber cable (500ns propagation each way) running 400 Gbps (50 GB/s) with 400ns switch processing time, buffer headroom must be >= (1400ns * 50 GB/s) * 1.5 = ~105 KB per port to prevent packet drops before the PAUSE frame halts the sender.",
     },
     realWorldEngineering: [
@@ -182,7 +182,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Fat-Tree Oversubscription Ratio",
-      equation: "R_{oversub} = \\frac{N_{downlinks} \\times BW_{down}}{N_{uplinks} \\times BW_{up}} \\quad \\text{[1.0 = Non-Blocking]}",
+      equation: "R_oversub = (N_downlinks × BW_down) / (N_uplinks × BW_up)  [1.0 = Non-Blocking]",
       explanation: "A leaf switch with 32x 400Gbps downlinks to servers and 16x 400Gbps uplinks to spines has an oversubscription ratio of 2:1 (0.5 bandwidth availability), reducing inter-leaf collective throughput by 50% under worst-case all-to-all permutations.",
     },
     realWorldEngineering: [
@@ -212,7 +212,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Algorithmic Time Complexity",
-      equation: "T_{ring} = 2 \\left( \\frac{N - 1}{N} \\right) \\frac{S}{B} + 2(N - 1)\\alpha \\quad \\text{vs} \\quad T_{tree} = 2 \\log_2(N) \\frac{S}{B} + 2 \\log_2(N)\\alpha",
+      equation: "T_ring = 2 × ((N − 1) / N) × (S / B) + 2(N − 1)α   vs   T_tree = 2 log₂(N) × (S / B) + 2 log₂(N)α",
       explanation: "As N grows large, (N-1)/N approaches 1.0, making Ring transfer time independent of rank count (2 * S / B). However, latency scales linearly with N (2*(N-1)*alpha), whereas Tree latency scales logarithmically (2*log2(N)*alpha).",
     },
     realWorldEngineering: [
@@ -242,7 +242,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Switch Buffer Incast Saturation",
-      equation: "Q_{depth} = \\sum_{i=1}^{k} BW_{in, i} \\times \\Delta t - BW_{out} \\times \\Delta t \\quad \\text{where } k \\gg 1",
+      equation: "Q_depth(t) = ∑(BW_in,i × Δt) − (BW_out × Δt)  where k senders ≫ 1",
       explanation: "When k = 64 nodes transmit at 400 Gbps into a single 400 Gbps egress port, buffer queue depth expands at 63 * 50 GB/s = 3.15 TB/s. A standard 32 MB switch buffer overflows in ~10 microseconds unless flow control kicks in.",
     },
     realWorldEngineering: [
@@ -272,7 +272,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "End-to-End I/O Latency Breakdown",
-      equation: "T_{POSIX} = T_{NVMe} + 2\\cdot T_{copy} + T_{PCIe, H2D} + T_{ctx} \\quad \\text{vs} \\quad T_{GDS} = T_{NVMe} + T_{DMA, direct}",
+      equation: "T_POSIX = T_NVMe + 2·T_copy + T_PCIe(H2D) + T_ctx   vs   T_GDS = T_NVMe + T_DMA(direct)",
       explanation: "GDS eliminates both the kernel-to-user copy (T_copy) and the host-to-device transfer (T_PCIe, H2D), reducing end-to-end data ingest latency by up to 70% and increasing sustained sequential read bandwidth to 95% of line rate.",
     },
     realWorldEngineering: [
@@ -302,7 +302,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Daly's Optimal Interval Formulation",
-      equation: "\\tau_{opt} = \\sqrt{2 \\cdot \\delta \\cdot \\text{MTBF}} - \\delta \\quad \\text{where } \\delta = \\text{checkpoint write time}",
+      equation: "τ_opt = √(2 · δ · MTBF) − δ,  where δ = checkpoint write time",
       explanation: "For a cluster with MTBF = 10 hours (36,000s) and checkpoint dump time delta = 180s (3 min), optimal interval tau_opt = sqrt(2 * 180 * 36000) - 180 = 3600 - 180 = 3420 seconds (~57 minutes).",
     },
     realWorldEngineering: [
@@ -332,7 +332,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Data Starvation Condition",
-      equation: "T_{ingest} = \\frac{S_{sample} \\times B_{batch}}{BW_{storage}} + T_{decode} \\le T_{forward+backward}",
+      equation: "T_ingest = (S_sample × B_batch) / BW_storage + T_decode ≤ T_step(forward+backward)",
       explanation: "If total batch ingest and decompression time exceeds the GPU compute execution time of forward + backward pass, GPUs enter an idle starve state, directly reducing Model FLOPs Utilization (MFU).",
     },
     realWorldEngineering: [
@@ -362,7 +362,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Recovery Time Formulation",
-      equation: "T_{MTTR} = T_{detect} + T_{cordon+swap} + T_{pod\\_init} + \\frac{S_{weights}}{BW_{rank\\_io}} + T_{barrier\\_sync}",
+      equation: "T_MTTR = T_detect + T_cordon_swap + T_pod_init + (S_weights / BW_rank_io) + T_barrier_sync",
       explanation: "With fast health probes (T_detect = 15s), automated node swap (T_swap = 10s), warm pod start (T_init = 5s), parallel sharded load (30 GB / 2 GB/s = 15s), and NCCL init (T_sync = 10s), total MTTR is ~55 seconds.",
     },
     realWorldEngineering: [
@@ -392,7 +392,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Cluster Starvation Risk Model",
-      equation: "P_{deadlock} = 1 - \\prod_{j=1}^{M} \\left( 1 - \\frac{U_j}{C_{total}} \\right) \\quad \\text{without atomic gang admission}",
+      equation: "P_deadlock = 1 − ∏[1 − (U_j / C_total)]  (without atomic gang admission)",
       explanation: "Without gang scheduling, as cluster utilization U increases toward capacity C_total, the probability of multiple competing distributed jobs entering an unresolvable partial allocation state approaches 1.0.",
     },
     realWorldEngineering: [
@@ -422,7 +422,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Collective Communication Slowdown Factor",
-      equation: "S_{comm} = 1.0 + \\sum_{h=1}^{H} w_h \\cdot \\left( \\text{Hops}_h - 1 \\right)",
+      equation: "S_comm = 1.0 + ∑[w_h × (Hops_h − 1)]",
       explanation: "Where w_h is the latency penalty weight per switch tier. Scattering ranks across core switches increases average hop count from 1 to 5, resulting in a 35%–50% slowdown in communication-heavy AllGather phases.",
     },
     realWorldEngineering: [
@@ -452,7 +452,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Throughput Degradation Formula",
-      equation: "T_{cluster\\_step} = \\max_{i=1}^{N} \\left( T_{compute, i} + T_{comm, i} \\right) \\implies \\text{Throughput Loss} = \\frac{T_{straggler} - T_{nominal}}{T_{straggler}}",
+      equation: "T_cluster_step = max_i(T_compute,i + T_comm,i) ⟹ Throughput Loss = (T_straggler − T_nominal) / T_straggler",
       explanation: "Even with straggler fraction f = 0.0001 (1 out of 10,000 GPUs), if that GPU runs at 1.25x step time, effective cluster throughput drops by exactly 20%, costing hundreds of thousands of dollars per day in lost compute.",
     },
     realWorldEngineering: [
@@ -482,7 +482,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "MIG Resource Slicing Invariant",
-      equation: "\\sum_{k=1}^{K} \\text{Profile}_{SM, k} \\le SM_{total} \\quad \\text{and} \\quad \\sum_{k=1}^{K} \\text{Profile}_{HBM, k} \\le HBM_{total}",
+      equation: "∑ Profile_SM,k ≤ SM_total   and   ∑ Profile_HBM,k ≤ HBM_total",
       explanation: "On an H100 (132 enabled SMs, 80GB HBM), instances are allocated across 7 hardware partitions (e.g., two 3g.40gb slices or seven 1g.10gb slices), guaranteeing deterministic memory bandwidth to each tenant.",
     },
     realWorldEngineering: [
@@ -512,7 +512,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Cluster SDC Probability Model",
-      equation: "P_{SDC\\_fleet} = 1 - \\left( 1 - \\lambda_{SDC} \\right)^{N_{GPU} \\times T_{hours}}",
+      equation: "P_SDC(fleet) = 1 − (1 − λ_SDC)^(N_GPU × T_hours)",
       explanation: "If single-GPU SDC rate lambda is 1 per 100,000 GPU-hours, a cluster of 16,384 GPUs operating for 30 days (11.8M GPU-hours) has a > 99.99% probability of experiencing multiple SDC events during the run.",
     },
     realWorldEngineering: [
@@ -542,7 +542,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Liquid Cooling Heat Transfer Equation",
-      equation: "Q = \\dot{m} \\times C_p \\times \\Delta T \\implies \\dot{m} = \\frac{P_{rack}}{C_p \\times (T_{out} - T_{in})}",
+      equation: "Q = ṁ × C_p × ΔT ⟹ ṁ = P_rack / [C_p × (T_out − T_in)]",
       explanation: "To dissipate P_rack = 120 kW with water (C_p = 4.184 kJ/kg*K) and a 10°C temperature delta (T_in=30°C, T_out=40°C), the CDU must circulate m = 120 / (4.184 * 10) = 2.87 kg/s (~45.5 Gallons Per Minute) of coolant continuously.",
     },
     realWorldEngineering: [
@@ -572,7 +572,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Predictive Drain vs Reactive Crash Cost",
-      equation: "C_{drain} = T_{swap} \\times \\text{BurnRate} \\quad \\ll \\quad C_{crash} = \\left( T_{rework} + T_{MTTR} \\right) \\times \\text{BurnRate}",
+      equation: "Cost_drain = T_swap × BurnRate ≪ Cost_crash = (T_rework + T_MTTR) × BurnRate",
       explanation: "A proactive drain takes ~30 seconds (costing ~$50 in compute burn). A hard crash causes 30 minutes of lost rework plus 10 minutes MTTR recovery on a 4,096-GPU cluster (costing ~$15,000 in wasted GPU burn).",
     },
     realWorldEngineering: [
@@ -602,7 +602,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "PUE & Facility Cost Formulation",
-      equation: "\\text{PUE} = \\frac{P_{total}}{P_{IT}} = \\frac{P_{IT} + P_{cooling} + P_{loss}}{P_{IT}} \\implies \\text{Cost}_{power} = P_{IT} \\times \\text{PUE} \\times \\text{Hours} \\times \\frac{\\text{\\$/kWh}}{1000}",
+      equation: "PUE = P_total / P_IT ⟹ Cost_power = P_IT × PUE × Hours × ($/kWh / 1000)",
       explanation: "For a 10 MW IT cluster operating for 1 year (8,760 hours) at $0.08/kWh: PUE 1.5 costs $10.51M in electricity; PUE 1.12 costs $7.85M, saving $2.66M annually purely through efficient liquid cooling.",
     },
     realWorldEngineering: [
@@ -632,7 +632,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "MFU Mathematical Formulation",
-      equation: "\\text{MFU} = \\frac{\\text{Tokens/sec} \\times 6 \\times N_{\\text{params}}}{N_{\\text{GPUs}} \\times \\text{Peak FLOPs}_{\\text{spec}}} \\quad \\text{[for standard transformer]}",
+      equation: "MFU = (Tokens/sec × 6 × N_params) / (N_GPUs × Peak_FLOPs_spec)",
       explanation: "For a 70B parameter model training at 3,200 tokens/sec across 64 H100 GPUs (peak FP16 = 989 TFLOPs each): MFU = (3200 * 6 * 70e9) / (64 * 989e12) = 1.344e15 / 6.329e16 = 21.2%. Optimizing kernels to reach 50% MFU doubles throughput to 7,500 tokens/sec without adding hardware.",
     },
     realWorldEngineering: [
@@ -662,7 +662,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Hourly Total Cost of Ownership (TCO)",
-      equation: "\\text{TCO}_{\\text{hour}} = \\frac{\\text{CapEx}_{\\text{total}}}{3 \\times 8760 \\times \\text{Utilization}} + \\left( P_{\\text{rack}} \\times \\text{PUE} \\times \\text{\\$/kWh} \\right) + \\text{OpEx}_{\\text{ops}}",
+      equation: "TCO_hour = CapEx_total / (3 × 8760 × Utilization) + (P_rack × PUE × $/kWh) + OpEx_ops",
       explanation: "For an 8x H100 server costing $300,000 CapEx over 3 years at 85% utilization, amortized hardware cost is $13.43/hour. With 10.2kW power at PUE 1.2 and $0.08/kWh ($0.98/hour), total effective cost is ~$15.50/node-hour ($1.94/GPU-hour).",
     },
     realWorldEngineering: [
@@ -692,7 +692,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Pretraining Total Cost Formulation",
-      equation: "\\text{Cost}_{\\text{run}} = \\frac{6 \\times N_{\\text{params}} \\times N_{\\text{tokens}}}{\\text{Peak FLOPs}_{\\text{GPU}} \\times \\text{MFU} \\times 3600} \\times \\text{Rate}_{\\text{GPU-hour}}",
+      equation: "Cost_run = [(6 × N_params × N_tokens) / (Peak_FLOPs × MFU × 3600)] × Rate_GPU_hour",
       explanation: "Training an 8B model on 15T tokens on H100 GPUs ($2.00/hr, 989 TFLOPs peak) at 50% MFU: Total GPU-hours = (6 * 8e9 * 15e12) / (989e12 * 0.50 * 3600) = 404,448 hours * $2.00 = $808,897 ($0.054 per 1M training tokens).",
     },
     realWorldEngineering: [
@@ -722,7 +722,7 @@ export const SCENE_NOTES: Record<string, SceneNote> = {
     ],
     mathDeepDive: {
       title: "Spot Arbitrage Net Cost Benefit",
-      equation: "\\text{Net Savings} = 1 - \\frac{\\text{Rate}_{\\text{spot}} \\times \\left( T_{\\text{run}} + T_{\\text{rework}} \\right)}{\\text{Rate}_{\\text{on-demand}} \\times T_{\\text{run}}} \\quad \\text{where } T_{\\text{rework}} \\ll T_{\\text{run}}",
+      equation: "Net Savings = 1 − [Rate_spot × (T_run + T_rework)] / [Rate_on-demand × T_run]",
       explanation: "If spot discount is 65% (Rate_spot = 0.35 * Rate_on-demand) and preemption interruptions add 5% overhead in rework time (T_rework = 0.05 * T_run), total cost is 0.35 * 1.05 = 36.75% of on-demand cost—achieving net 63.25% dollar savings.",
     },
     realWorldEngineering: [

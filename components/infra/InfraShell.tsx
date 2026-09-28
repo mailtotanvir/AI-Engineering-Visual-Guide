@@ -58,7 +58,7 @@ export default function InfraShell({
               <span className="configChip">{note.module}</span>
             </div>
 
-            <h3 style={{ fontSize: 22, marginTop: 0, marginBottom: "var(--s3)", color: "var(--ink1)" }}>{note.title}</h3>
+            <h3 style={{ fontSize: 22, marginTop: 0, marginBottom: "var(--s3)", color: "var(--ink)" }}>{note.title}</h3>
             <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink2)", marginBottom: "var(--s4)" }}>{note.overview}</p>
 
             <div style={{ display: "grid", gap: "var(--s4)", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", marginBottom: "var(--s4)" }}>
