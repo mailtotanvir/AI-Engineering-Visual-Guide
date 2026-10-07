@@ -423,3 +423,6 @@ a.dot.on{background:var(--teal);border-color:var(--teal)}
   .sidebarBackdrop{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:95}
 }
 
+
+/* Optional research surface; uses the encyclopedia's existing tokens. */
+.webmcpPanel{margin:24px;padding:18px;border:1px solid var(--line);color:var(--ink2);font-size:14px;max-width:900px}.webmcpPanel summary{cursor:pointer;color:var(--ink);font-family:var(--font-m)}.webmcpPanel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:350px;overflow:auto}.webmcpPanel textarea{display:block;width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:10px}.webmcpPanel button,.webmcpPanel select{background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:8px;margin:5px}.topicCard[data-agent-match]{outline:2px solid var(--cyan);outline-offset:3px}

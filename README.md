@@ -355,3 +355,7 @@ The exported site is written to `out/` and requires no application server.
 [Launch the encyclopedia](https://mailtotanvir.github.io/AI-Engineering-Visual-Guide/)
 
 </div>
+
+## Experimental WebMCP research adapter
+
+CUDA and Inference Atlas entries are exposed through three browser-side tools. Open “Agent-native web · research mode” for local harness calls, native status, schemas, and opt-in local logs. Native support is experimental and unverified; ordinary browsing has no WebMCP dependency. See [the research note](docs/webmcp-experiment.md) for architecture, requirements, security, and limitations.

@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
+import { useAtlasSelection } from "@/components/webmcp/useAtlasSelection";
 import React, { useState } from "react";
 import { DOMAINS, DOMAIN_COLORS, TOPICS } from "@/content/cuda/atlas";
 
 export default function AtlasBrowser() {
   const [domain, setDomain] = useState("threads");
   const [openId, setOpenId] = useState<string | null>(null);
+  const matches = useAtlasSelection("cuda", TOPICS, setDomain, setOpenId);
   const topics = TOPICS.filter((t) => t.domain === domain);
 
   return (
@@ -34,7 +36,7 @@ export default function AtlasBrowser() {
           const open = openId === t.id;
           const color = DOMAIN_COLORS[t.domain];
           return (
-            <article key={t.id} className={"topicCard" + (open ? " open" : "")} style={{ borderLeftColor: color }}>
+            <article data-agent-match={matches.includes(t.id) || undefined} key={t.id} className={"topicCard" + (open ? " open" : "")} style={{ borderLeftColor: color }}>
               <header
                 role="button"
                 tabIndex={0}

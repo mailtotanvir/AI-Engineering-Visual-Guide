@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ResearchPanel from "@/components/webmcp/ResearchPanel";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { WORLDS, type World } from "@/content/worlds";
@@ -285,6 +286,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         {/* Page Content */}
         <div className="appMainWrapper">
           {children}
+          <ResearchPanel />
         </div>
 
         {/* Footer */}
